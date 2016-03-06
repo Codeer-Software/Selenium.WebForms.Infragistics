@@ -44,15 +44,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DropDownEditorProviderDriver.cs" />
-    <Compile Include="EditorProviderDriver.cs" />
+    <Compile Include="WebDataGridDropDownProviderDriver.cs" />
+    <Compile Include="WebDataGridEditorProviderDriver.cs" />
+    <Compile Include="Inside\ElementScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebDataGridBehaviors.cs" />
-    <Compile Include="WebDataGridCell.cs" />
+    <Compile Include="WebDataGridBehaviorsDriver.cs" />
+    <Compile Include="WebDataGridCellDriver.cs" />
     <Compile Include="WebDataGridDriver.cs" />
-    <Compile Include="WebDataGridJSutility.cs" />
-    <Compile Include="WebGridCheckEditorDriver.cs" />
-    <Compile Include="WebGridTextEditorDriver.cs" />
+    <Compile Include="Inside\WebDataGridJSutility.cs" />
+    <Compile Include="WebDataGridCheckBoxFieldDriver.cs" />
+    <Compile Include="WebDataGridDataFieldDriver.cs" />
     <Compile Include="WebHierarchicalDataGridDriver.cs" />
   </ItemGroup>
   <ItemGroup>

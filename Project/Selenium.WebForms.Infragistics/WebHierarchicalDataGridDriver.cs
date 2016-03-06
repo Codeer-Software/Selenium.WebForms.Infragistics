@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Threading;
+using OpenQA.Selenium;
+using Selenium.WebForms.Infragistics.Inside;
 
 namespace Selenium.WebForms.Infragistics
 {
@@ -12,7 +15,16 @@ namespace Selenium.WebForms.Infragistics
         public WebHierarchicalDataGridDriver(IWebDriver driver, string id)
             : base(driver, id)
         {
-            Hierarchical = true;
+        }
+
+        public override string GetGrid()
+        {
+            var grid = "grid.get_gridView()";
+            if (Islands)
+            {
+                grid += $".get_rows().get_row({RowIndex}).get_rowIslands({RowIslandsIndex})[{ColIndex}]";
+            }
+            return grid;
         }
 
         public WebHierarchicalDataGridDriver GetRowIslands(int rowIndex, int rowIslandsIndex, int colIndex)
@@ -22,6 +34,20 @@ namespace Selenium.WebForms.Infragistics
             RowIslandsIndex = rowIslandsIndex;
             ColIndex = colIndex;
             return this;
+        }
+
+
+        public void SetExpanded()
+        {
+            if (!Islands) return;
+            var js = new WebDataGridJSutility(this);
+            var expand = $"{js.LineGetGrid}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);";
+            while (true)
+            {
+                Js.ExecuteScript(expand);
+                Thread.Sleep(10);
+                break;
+            }
         }
     }
 }

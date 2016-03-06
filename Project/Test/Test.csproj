@@ -59,6 +59,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BrowserUtil.cs" />
+    <Compile Include="GetElementTest.cs" />
+    <Compile Include="WebDataGridBehaviorsDriverTest.cs" />
+    <Compile Include="WebDataGridEditorProviderDriverTest.cs" />
     <Compile Include="WebDataGridTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
