@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfragisticsWebFormsSample", "InfragisticsWebFormsSample\InfragisticsWebFormsSample.csproj", "{655998FE-528B-49FA-9BBF-B2B666F8E763}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{FE6729B0-2188-486A-A737-0BD9C27775B8}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureVMPublishModule.psm1 = PublishScripts\AzureVMPublishModule.psm1
+		PublishScripts\Publish-WebApplicationVM.ps1 = PublishScripts\Publish-WebApplicationVM.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{4FAEBD61-CC3F-483D-BBCE-1116687DB5BB}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\InfragisticsWebFormsSample-WAWS-dev.json = PublishScripts\Configurations\InfragisticsWebFormsSample-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{655998FE-528B-49FA-9BBF-B2B666F8E763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655998FE-528B-49FA-9BBF-B2B666F8E763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655998FE-528B-49FA-9BBF-B2B666F8E763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655998FE-528B-49FA-9BBF-B2B666F8E763}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4FAEBD61-CC3F-483D-BBCE-1116687DB5BB} = {FE6729B0-2188-486A-A737-0BD9C27775B8}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://codeer.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = InfragisticsWebFormsSample\\InfragisticsWebFormsSample.csproj
+		SccProjectName1 = InfragisticsWebFormsSample
+		SccLocalPath1 = InfragisticsWebFormsSample
+	EndGlobalSection
+EndGlobal
