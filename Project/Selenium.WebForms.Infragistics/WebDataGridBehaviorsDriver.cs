@@ -4,7 +4,7 @@ using Selenium.WebForms.Infragistics.Inside;
 
 namespace Selenium.WebForms.Infragistics
 {
-    public class WebDataGridBehaviors
+    public class WebDataGridBehaviorsDriver
     {
         private readonly WebDataGridDriver _webDataGridDriver;
 
@@ -15,7 +15,7 @@ namespace Selenium.WebForms.Infragistics
             Descending,
         }
 
-        public WebDataGridBehaviors(WebDataGridDriver webDataGridDriver)
+        public WebDataGridBehaviorsDriver(WebDataGridDriver webDataGridDriver)
         {
             _webDataGridDriver = webDataGridDriver;
         }
