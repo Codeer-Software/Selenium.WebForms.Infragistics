@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
 using Selenium.WebForms.Infragistics;
 
@@ -45,6 +41,7 @@ namespace Test
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
             grid.GetBehaviors().Filter("LastName", "石川");
         }
+
         [TestMethod]
         public void ページWebDataGridDriver()
         {
@@ -67,6 +64,7 @@ namespace Test
 
             grid.GetBehaviors().Fix(1, false);
         }
+
         [TestMethod]
         public void ページWebHierarchicalDataGrid親子()
         {

@@ -4,7 +4,7 @@ using Selenium.WebForms.Infragistics.Inside;
 
 namespace Selenium.WebForms.Infragistics
 {
-    public class WebDataGridBehaviorsDriver
+    public class WebDataGridBehaviors
     {
         private readonly WebDataGridDriver _webDataGridDriver;
 
@@ -15,7 +15,7 @@ namespace Selenium.WebForms.Infragistics
             Descending,
         }
 
-        public WebDataGridBehaviorsDriver(WebDataGridDriver webDataGridDriver)
+        public WebDataGridBehaviors(WebDataGridDriver webDataGridDriver)
         {
             _webDataGridDriver = webDataGridDriver;
         }
@@ -65,7 +65,7 @@ namespace Selenium.WebForms.Infragistics
             SetFix(GetColumnKey(idx), fix);
         }
 
-        //ToDo FromKey的なアクセスは全部ID系に直す
+        //ToDo  I want to write fixColumn. But fixColumn is nothing. fixColumnByKey
         private void SetFix(string key, bool fix)
         {
             var grid = _webDataGridDriver.GetGrid();

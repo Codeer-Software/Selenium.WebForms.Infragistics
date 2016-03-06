@@ -1,6 +1,5 @@
 ﻿namespace Selenium.WebForms.Infragistics.Inside
 {
-    //外から使うものではないのでinsiderフォルダ的な所にしたい。
     internal class WebDataGridJSutility
     {
         private readonly string _id;
