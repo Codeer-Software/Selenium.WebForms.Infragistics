@@ -22,7 +22,7 @@ namespace Selenium.WebForms.Infragistics
         }
     }
 
-    public static class WebDataGridCheckBoxFieldDriverExtensions
+    public static class CheckBoxFieldDriverExtensions
     {
         public static WebDataGridCheckBoxFieldDriver GetCheckBoxField(this WebDataGridDriver grid) => new WebDataGridCheckBoxFieldDriver(grid);
     }

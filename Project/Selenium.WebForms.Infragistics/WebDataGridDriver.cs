@@ -18,7 +18,7 @@ namespace Selenium.WebForms.Infragistics
 
         public WebDataGridCellDriver GetCell(int rowIndex, int colIndex) => new WebDataGridCellDriver(this, rowIndex, colIndex);
 
-        //ToDo カラム未実装
+        //ToDo Column Unimplemented
         //public WebDataGridColumns GetColumn(int columnIndex) => new WebDataGridColumns(this, columnIndex);
         public WebDataGridBehaviorsDriver GetBehaviors() => new WebDataGridBehaviorsDriver(this);
     }

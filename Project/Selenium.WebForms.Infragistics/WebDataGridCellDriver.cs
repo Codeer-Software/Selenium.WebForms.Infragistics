@@ -32,7 +32,7 @@ namespace Selenium.WebForms.Infragistics
         public ElementDriver GetElement()
         {
             var script = $"{new WebDataGridJSutility(Grid).LineGetGrid}var element={GetCellScript}.get_element();";
-            return new ElementDriver(Grid.Driver, new ElementScript(Grid.Driver, script));
+            return new ElementDriver(new ElementScript(Grid.Driver, script));
         }
     }
 }
