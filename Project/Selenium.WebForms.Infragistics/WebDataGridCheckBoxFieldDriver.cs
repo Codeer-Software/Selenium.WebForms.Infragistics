@@ -4,22 +4,27 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridCheckBoxFieldDriver
     {
-        public WebDataGridDriver Grid { get; }
-
-        public WebDataGridCheckBoxFieldDriver(WebDataGridDriver grid)
+        #region Properties
+        public WebDataGridDriver WebDataGrid { get; }
+        #endregion Properties
+        #region Constructors
+        public WebDataGridCheckBoxFieldDriver(WebDataGridDriver webDataGrid)
         {
-            Grid = grid;
+            WebDataGrid = webDataGrid;
         }
 
+        #endregion Constructors
+        #region Methods
         public void Edit(bool check)
         {
-            var js = new WebDataGridJSutility(Grid);
-            var current = (bool)Grid.Js.ExecuteScript(js.LineGetGrid + js.ActiveCell + "return activeCell.get_value();");
+            var js = new WebDataGridJSutility(WebDataGrid);
+            var current = (bool)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_value();");
             if (current != check)
             {
-                Grid.Js.ExecuteScript(js.LineGetGrid + js.ActiveCell + "activeCell.get_element().children[0].click();");
+                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "activeCell.get_element().children[0].click();");
             }
         }
+        #endregion Methods
     }
 
     public static class CheckBoxFieldDriverExtensions

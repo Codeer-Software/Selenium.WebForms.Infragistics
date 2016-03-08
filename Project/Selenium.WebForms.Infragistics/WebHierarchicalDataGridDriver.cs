@@ -7,25 +7,34 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebHierarchicalDataGridDriver : WebDataGridDriver
     {
-        public int RowIndex { get; set; }
-        public int RowIslandsIndex { get; set; }
-        public int ColIndex { get; set; }
-        public bool Islands { get; set; }
+        #region Properties
+        public override string GridScript
+        {
+            get
+            {
+                var grid = "grid.get_gridView()";
+                if (Islands)
+                {
+                    grid += $".get_rows().get_row({RowIndex}).get_rowIslands({RowIslandsIndex})[{ColIndex}]";
+                }
+                return grid;
+            }
+        }
+        private int RowIndex { get; set; }
+        private int RowIslandsIndex { get; set; }
+        private int ColIndex { get; set; }
+        private bool Islands { get; set; }
 
+        #endregion Properties
+
+        #region Constructors
         public WebHierarchicalDataGridDriver(IWebDriver driver, string id)
             : base(driver, id)
         {
         }
+        #endregion Constructors
 
-        public override string GetGrid()
-        {
-            var grid = "grid.get_gridView()";
-            if (Islands)
-            {
-                grid += $".get_rows().get_row({RowIndex}).get_rowIslands({RowIslandsIndex})[{ColIndex}]";
-            }
-            return grid;
-        }
+        #region Methods
 
         public WebHierarchicalDataGridDriver GetRowIslands(int rowIndex, int rowIslandsIndex, int colIndex)
         {
@@ -41,7 +50,7 @@ namespace Selenium.WebForms.Infragistics
         {
             if (!Islands) return;
             var js = new WebDataGridJSutility(this);
-            var expand = $"{js.LineGetGrid}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);";
+            var expand = $"{js.GetGridScript}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);";
             while (true)
             {
                 Js.ExecuteScript(expand);
@@ -49,5 +58,6 @@ namespace Selenium.WebForms.Infragistics
                 break;
             }
         }
+        #endregion Methods
     }
 }

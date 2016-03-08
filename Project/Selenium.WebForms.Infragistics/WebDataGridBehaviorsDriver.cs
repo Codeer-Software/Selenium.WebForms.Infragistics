@@ -6,8 +6,6 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridBehaviorsDriver
     {
-        private readonly WebDataGridDriver _webDataGridDriver;
-
         public enum SortType
         {
             None,
@@ -15,10 +13,22 @@ namespace Selenium.WebForms.Infragistics
             Descending,
         }
 
+        #region Properties
+
+        private WebDataGridDriver WebDataGridDriver { get; }
+
+        #endregion Properties
+
+        #region Constructors
+
         public WebDataGridBehaviorsDriver(WebDataGridDriver webDataGridDriver)
         {
-            _webDataGridDriver = webDataGridDriver;
+            WebDataGridDriver = webDataGridDriver;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public void Sort(string key, SortType sort = SortType.Ascending)
         {
@@ -68,27 +78,22 @@ namespace Selenium.WebForms.Infragistics
         //ToDo  I want to write fixColumn. But fixColumn is nothing. fixColumnByKey
         private void SetFix(string key, bool fix)
         {
-            var grid = _webDataGridDriver.GetGrid();
             var columnByKey = fix ? "fixColumnByKey" : "unfixColumnByKey";
-            ExecuteScript($"{grid}.get_behaviors().get_columnFixing().{columnByKey}('{key}', $IG.FixLocation.Left)");
+            ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_columnFixing().{columnByKey}('{key}', $IG.FixLocation.Left)");
         }
 
         private void SetHidden(string key, bool hidden)
         {
-            var grid = _webDataGridDriver.GetGrid();
-            ExecuteScript($"{grid}.get_columns().get_columnFromKey('{key}').set_hidden({hidden.ToString().ToLower()});");
+            ExecuteScript($"{WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').set_hidden({hidden.ToString().ToLower()});");
         }
 
         private void SetPage(int page)
         {
-            var grid = _webDataGridDriver.GetGrid();
-            //get_pageCount,get_pageIndex
-            ExecuteScript($"{grid}.get_behaviors().get_paging().set_pageIndex({page - 1});");
+            ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_paging().set_pageIndex({page - 1});");
         }
 
         private void SetSort(string key, SortType sort)
         {
-            var grid = _webDataGridDriver.GetGrid();
             int type;
             switch (sort)
             {
@@ -98,15 +103,15 @@ namespace Selenium.WebForms.Infragistics
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sort), sort, null);
             }
+            var grid = WebDataGridDriver.GridScript;
             ExecuteScript($"{grid}.get_behaviors().get_sorting().sortColumn({grid}.get_columns().get_columnFromKey('{key}'), {type}, false)");
         }
 
         private void SetFilter(string key, string value)
         {
-            var grid = _webDataGridDriver.GetGrid();
+            var grid = WebDataGridDriver.GridScript;
 
             var script = new StringBuilder();
-            //CreateとかAddとか既存でもこの方法しかない？
             script.AppendLine($"var columnFilter = {grid}.get_behaviors().get_filtering().create_columnFilter('{key}');");
             script.AppendLine("var condition = columnFilter.get_condition();");
             //script.AppendLine("condition.set_rule($IG.TextFilterRules.Equals);");
@@ -119,15 +124,15 @@ namespace Selenium.WebForms.Infragistics
 
         private string GetColumnKey(int idx)
         {
-            //待ち受けしないとgridがこないときもある気がする。起動時待ち受けはselenium?
-            var grid = _webDataGridDriver.GetGrid();
-            return (string)ExecuteScript($"return {grid}.get_columns().get_column({idx}).get_key()");
+            return (string)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_columns().get_column({idx}).get_key()");
         }
 
         private object ExecuteScript(string script)
         {
-            var js = new WebDataGridJSutility(_webDataGridDriver);
-            return _webDataGridDriver.Js.ExecuteScript($"{js.LineGetGrid}{script}");
+            var js = new WebDataGridJSutility(WebDataGridDriver);
+            return WebDataGridDriver.Js.ExecuteScript($"{js.GetGridScript}{script}");
         }
+
+        #endregion Methods
     }
 }

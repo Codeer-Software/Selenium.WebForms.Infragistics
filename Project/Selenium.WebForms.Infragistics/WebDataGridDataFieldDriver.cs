@@ -6,36 +6,43 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridDataFieldDriver
     {
-        public WebDataGridDriver Grid { get; }
+        #region Properties
 
-        public WebDataGridDataFieldDriver(WebDataGridDriver grid)
+        public WebDataGridDriver WebDataGrid { get; }
+
+        #endregion Properties
+
+        #region Constructors
+
+        public WebDataGridDataFieldDriver(WebDataGridDriver webDataGrid)
         {
-            Grid = grid;
+            WebDataGrid = webDataGrid;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public void Edit(string text)
         {
-            var js = new WebDataGridJSutility(Grid);
-            //編集状態にしてエディタ取得
+            var js = new WebDataGridJSutility(WebDataGrid);
             IWebElement editor;
             while (true)
             {
-                Grid.Js.ExecuteScript(js.LineGetGrid + js.ActiveCell + js.EnterEditMode);
-                editor = Grid.Driver.FindElement(By.Id(Grid.Id)).FindElement(By.ClassName("igg_EditCell"));
+                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
+                editor = WebDataGrid.Driver.FindElement(By.Id(WebDataGrid.Id)).FindElement(By.ClassName("igg_EditCell"));
                 if (editor.Displayed)
                 {
                     break;
                 }
                 Thread.Sleep(10);
             }
-
-            //テキスト変更
             editor.Clear();
             editor.SendKeys(text);
-
-            //編集終了
-            Grid.Js.ExecuteScript(js.LineGetGrid + js.ExitEditMode);
+            WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
         }
+
+        #endregion Methods
     }
 
     public static class WebDataGridDataFieldDriverExtensions

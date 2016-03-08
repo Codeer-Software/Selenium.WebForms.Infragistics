@@ -5,34 +5,47 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridCellDriver
     {
-        public WebDataGridDriver Grid { get; }
+        #region Properties
+
+        public WebDataGridDriver WebDataGrid { get; }
         public int RowIndex { get; }
         public int ColIndex { get; }
-        public string Text => (string)Grid.Js.ExecuteScript(new WebDataGridJSutility(Grid).LineGetGrid + "return " + GetCellScript + ".get_text();");
-        public object Value => Grid.Js.ExecuteScript(new WebDataGridJSutility(Grid).LineGetGrid + "return " + GetCellScript + ".get_value();");
+        public string Text => (string)WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_text();");
+        public object Value => WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_value();");
 
-        public string GetCellScript => $"{Grid.GetGrid()}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
+        public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
 
-        internal WebDataGridCellDriver(WebDataGridDriver grid, int rowIndex, int colIndex)
+        #endregion Properties
+
+        #region Constructors
+
+        internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
-            Grid = grid;
+            WebDataGrid = webDataGrid;
             RowIndex = rowIndex;
             ColIndex = colIndex;
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public void Activate()
         {
-            var js = new WebDataGridJSutility(Grid);
-            var grid = Grid.GetGrid();
-            //set_activeCellの第二引数を設定しないと、ActiveCellChangedイベントが来ない
+            var js = new WebDataGridJSutility(WebDataGrid);
+            var grid = WebDataGrid.GridScript;
+            //If you don't set the 2nd argument of set_activeCell, not come ActiveCellChanged event
             //http://help.jp.infragistics.com/Help/doc/Silverlight/2014.1/CLR4.0/html/InfragisticsSL5.Controls.Grids.XamGrid.v14.1~Infragistics.Controls.Grids.XamGrid~SetActiveCell%28CellBase,CellAlignment,InvokeAction,Boolean,Boolean%29.html
-            var setActiveCell = $"{js.LineGetGrid}grid.get_element().focus();{grid}.get_behaviors().get_activation().set_activeCell({GetCellScript},1);";
-            Grid.Js.ExecuteScript(setActiveCell);
+            var setActiveCell = $"{js.GetGridScript}grid.get_element().focus();{grid}.get_behaviors().get_activation().set_activeCell({CellScript},1);";
+            WebDataGrid.Js.ExecuteScript(setActiveCell);
         }
+
         public ElementDriver GetElement()
         {
-            var script = $"{new WebDataGridJSutility(Grid).LineGetGrid}var element={GetCellScript}.get_element();";
-            return new ElementDriver(new ElementScript(Grid.Driver, script));
+            var script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}var element={CellScript}.get_element();";
+            return new ElementDriver(new ElementScript(WebDataGrid.Driver, script));
         }
+
+        #endregion Methods
     }
 }

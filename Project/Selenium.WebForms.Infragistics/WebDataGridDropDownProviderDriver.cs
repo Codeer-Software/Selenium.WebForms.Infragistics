@@ -2,10 +2,16 @@
 {
     public class WebDataGridDropDownProviderDriver : WebDataGridEditorProviderDriver
     {
-        public WebDataGridDropDownProviderDriver(WebDataGridDriver grid, string id)
-            : base(grid, id)
+        #region Constructors
+
+        public WebDataGridDropDownProviderDriver(WebDataGridDriver webDataGrid, string id)
+            : base(webDataGrid, id)
         {
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         protected override void SetValue(string text)
         {
@@ -19,6 +25,8 @@
             var value = (string)Js.ExecuteScript($"return {GetControlId()}.get_items().getItem({index}).get_text()");
             Edit(value);
         }
+
+        #endregion Methods
     }
 
     public static class WebDataGridDropDownProviderDriverExtensions

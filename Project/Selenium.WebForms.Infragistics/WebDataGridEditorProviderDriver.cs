@@ -6,39 +6,30 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridEditorProviderDriver
     {
+        #region Properties
+
         private string Id { get; }
-        private WebDataGridDriver Grid { get; }
-        protected IWebDriver Driver => Grid.Driver;
+        private WebDataGridDriver WebDataGrid { get; }
+        protected IWebDriver Driver => WebDataGrid.Driver;
         protected IJavaScriptExecutor Js => (IJavaScriptExecutor)Driver;
 
-        public WebDataGridEditorProviderDriver(WebDataGridDriver grid, string id)
+        #endregion Properties
+
+        #region Constructors
+
+        public WebDataGridEditorProviderDriver(WebDataGridDriver webDataGrid, string id)
         {
-            Grid = grid;
+            WebDataGrid = webDataGrid;
             Id = id;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public void Edit(string text)
         {
             EditCore(text);
-        }
-
-        private void EditCore(string text)
-        {
-            var js = new WebDataGridJSutility(Grid);
-            //編集状態にしてエディタ取得
-            while (true)
-            {
-                Grid.Js.ExecuteScript(js.LineGetGrid + js.ActiveCell + js.EnterEditMode);
-                var e = Driver.FindElement(By.Id(Id));
-                if (e.Displayed)
-                {
-                    break;
-                }
-                Thread.Sleep(10);
-            }
-            SetValue(text);
-            //編集終了
-            Grid.Js.ExecuteScript(js.LineGetGrid + js.ExitEditMode);
         }
 
         protected virtual void SetValue(string text)
@@ -58,10 +49,30 @@ namespace Selenium.WebForms.Infragistics
 
         protected string GetControlId()
         {
-            //Idの次のタグ、但し、_clientStateは抜く。TextBoxProviderはこれだとnull
+            //Id next tag, however "_clientState" is pull out .
+            //But TextBoxProvider is null
             var core = (string)Js.ExecuteScript($"return document.getElementById(\"{Id}\").firstElementChild.id;");
             return (string.IsNullOrEmpty(core)) ? string.Empty : "ig_controls." + core.Replace("_clientState", "");
         }
+
+        private void EditCore(string text)
+        {
+            var js = new WebDataGridJSutility(WebDataGrid);
+            while (true)
+            {
+                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
+                var e = Driver.FindElement(By.Id(Id));
+                if (e.Displayed)
+                {
+                    break;
+                }
+                Thread.Sleep(10);
+            }
+            SetValue(text);
+            WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
+        }
+
+        #endregion Methods
     }
 
     public static class WebDataGridEditorProviderDriverExtensions
