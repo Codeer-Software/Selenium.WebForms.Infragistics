@@ -193,9 +193,8 @@
     <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample %284%29.pubxml" />
-    <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample-T %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample-T.pubxml" />
     <None Include="Properties\PublishProfiles\InfragisticsWebFormsSample.pubxml" />
+    <None Include="Properties\PublishProfiles\SeleniumWebFormsInfragistics - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="ig_res\Default\ig_calendarview.css" />
     <Content Include="ig_res\Default\ig_captcha.css" />

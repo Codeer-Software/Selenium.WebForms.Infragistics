@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
 using Selenium.WebForms.Infragistics;
 
@@ -16,14 +12,12 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-#if DEBUG
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+#if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
-            _driver = BrowserUtil.GetDriver();
-            _driver.Url = "http://infragisticswebformssample.azurewebsites.net/";
+            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
 #endif
-            BrowserUtil.IsTitle("InfragisticsWebFormsSample");
         }
 
         [TestCleanup]
@@ -40,7 +34,7 @@ namespace Test
             var textEditor = grid.GetDataField();
             var checkEditor = grid.GetCheckBoxField();
 
-            //コンボ編集
+            //Combo
             grid.GetCell(0, 0).Activate();
             dropEditor.Edit(1);
             Assert.AreEqual("100", grid.GetCell(0, 0).Text);
@@ -54,13 +48,13 @@ namespace Test
             dropEditor.Edit("10");
             Assert.AreEqual("10", cell10.Text);
 
-            //テキスト編集
+            //Text
             var cell11 = grid.GetCell(1, 1);
             cell11.Activate();
             textEditor.Edit("abc");
             Assert.AreEqual("abc", cell11.Text);
 
-            //チェックボックス編集
+            //Checkbox
             var cell12 = grid.GetCell(1, 2);
             cell12.Activate();
             checkEditor.Edit(true);

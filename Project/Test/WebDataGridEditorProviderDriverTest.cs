@@ -12,14 +12,12 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-#if DEBUG
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+#if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
-            _driver = BrowserUtil.GetDriver();
-            _driver.Url = "http://infragisticswebformssample.azurewebsites.net/";
+            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
 #endif
-            BrowserUtil.IsTitle("InfragisticsWebFormsSample");
         }
 
         [TestCleanup]

@@ -9,17 +9,18 @@ namespace Test
     {
         private static RemoteWebDriver _driver;
 
+        private WebDataGridDriver _webDataGrid;
+
         [TestInitialize]
         public void TestInitialize()
         {
-#if DEBUG
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+#if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
-            _driver = BrowserUtil.GetDriver();
-            _driver.Url = "http://infragisticswebformssample.azurewebsites.net/";
+            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
 #endif
-            BrowserUtil.IsTitle("InfragisticsWebFormsSample");
+            _webDataGrid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
         }
 
         [TestCleanup]
@@ -29,49 +30,42 @@ namespace Test
         }
 
         [TestMethod]
-        public void ソートWebDataGridDriver()
+        public void SortWebDataGridDriver()
         {
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            grid.GetBehaviors().Sort("Id", WebDataGridBehaviorsDriver.SortType.Descending);
+            _webDataGrid.GetBehaviors().Sort("Id", WebDataGridBehaviorsDriver.SortType.Descending);
         }
 
         [TestMethod]
-        public void フィルタWebDataGridDriver()
+        public void FilterWebDataGridDriver()
         {
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            grid.GetBehaviors().Filter("LastName", "石川");
+            _webDataGrid.GetBehaviors().Filter("LastName", "Ishikawa");
         }
 
         [TestMethod]
-        public void ページWebDataGridDriver()
+        public void PageWebDataGridDriver()
         {
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            grid.GetBehaviors().Page(2);
+            _webDataGrid.GetBehaviors().Page(2);
         }
 
         [TestMethod]
-        public void 非表示WebDataGridDriver()
+        public void HiddenWebDataGridDriver()
         {
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            grid.GetBehaviors().Hidden(2);
+            _webDataGrid.GetBehaviors().Hidden(2);
         }
 
         [TestMethod]
-        public void 固定WebDataGridDriver()
+        public void FixWebDataGridDriver()
         {
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            grid.GetBehaviors().Fix(1);
-
-            grid.GetBehaviors().Fix(1, false);
+            _webDataGrid.GetBehaviors().Fix(1);
+            _webDataGrid.GetBehaviors().Fix(1, false);
         }
 
         [TestMethod]
-        public void ページWebHierarchicalDataGrid親子()
+        public void PageWebHierarchicalDataGrid()
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             grid.GetBehaviors().Page(2);
 
-            //子供の操作をするときに自分で開く必要がある。
             //var childGrid = grid.GetRowIslands(0, 0, 0);
             //childGrid.GetBehaviors().Page(2);
         }

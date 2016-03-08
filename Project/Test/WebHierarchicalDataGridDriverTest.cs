@@ -16,14 +16,12 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-#if DEBUG
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+#if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
-            _driver = BrowserUtil.GetDriver();
-            _driver.Url = "http://infragisticswebformssample.azurewebsites.net/";
+            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
 #endif
-            BrowserUtil.IsTitle("InfragisticsWebFormsSample");
         }
 
         [TestCleanup]
@@ -38,24 +36,13 @@ namespace Test
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var textEditor = grid.GetDataField();
 
-            //テキスト編集
             var cell01 = grid.GetCell(0, 1);
             cell01.Activate();
-            textEditor.Edit("犬");
-            Assert.AreEqual("犬", cell01.Text);
+            textEditor.Edit("Dog");
+            Assert.AreEqual("Dog", cell01.Text);
 
             IList<IWebElement> links = _driver.FindElements(By.Id("MainContent_UpdateButton"));
             links.First(element => element != null).Click();
-        }
-
-        [TestMethod]
-        public void Expand()
-        {
-            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
-            var childGrid = grid.GetRowIslands(0, 0, 0);
-
-            childGrid.SetExpanded();
-
         }
 
         [TestMethod]
@@ -64,6 +51,9 @@ namespace Test
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
 
             var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded();
+            //Wait!
+
             var childTextEditor = childGrid.GetDataField();
             var childCheckEditor = childGrid.GetCheckBoxField();
 
@@ -76,7 +66,7 @@ namespace Test
             childTextEditor.Edit("Y");
             Assert.AreEqual("Y", childcell07.Text);
 
-            //チェックボックス編集
+            //Checkbox
             var cell03 = childGrid.GetCell(0, 3);
             cell03.Activate();
             childCheckEditor.Edit(true);
@@ -84,7 +74,7 @@ namespace Test
             childCheckEditor.Edit(false);
             Assert.AreEqual(false, cell03.Value);
 
-            //コンボ編集
+            //Combobox
             var childDropEditor = childGrid.GetDropDownProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
             childGrid.GetCell(0, 0).Activate();
             childDropEditor.Edit(1);
