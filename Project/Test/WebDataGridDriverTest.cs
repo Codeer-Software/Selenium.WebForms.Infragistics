@@ -27,6 +27,13 @@ namespace Test
         }
 
         [TestMethod]
+        public void TestWebDataGridColmnDriver()
+        {
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            Assert.AreEqual("100", grid.GetColumn(1).Text);
+        }
+
+        [TestMethod]
         public void TestWebDataGridDriver()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
 using Selenium.WebForms.Infragistics;
 
@@ -12,7 +13,7 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Ie);
 #if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
@@ -31,8 +32,11 @@ namespace Test
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded();
 
             //ToDo EditorProvider is All Name Change.
+
+            Thread.Sleep(10000);
 
             //DropDownProvider
             var dropEditor = childGrid.GetDropDownProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");

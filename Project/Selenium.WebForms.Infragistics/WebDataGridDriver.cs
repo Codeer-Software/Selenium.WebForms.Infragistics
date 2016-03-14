@@ -22,9 +22,8 @@ namespace Selenium.WebForms.Infragistics
         }
         #endregion Constructors
         #region Methods
-        public WebDataGridCellDriver GetCell(int rowIndex, int colIndex) => new WebDataGridCellDriver(this, rowIndex, colIndex);
-        //ToDo Column Unimplemented
-        //public WebDataGridColumns GetColumn(int columnIndex) => new WebDataGridColumns(this, columnIndex);
+        public virtual WebDataGridCellDriver GetCell(int rowIndex, int colIndex) => new WebDataGridCellDriver(this, rowIndex, colIndex);
+        public WebDataGridColumnsDriver GetColumn(int columnIndex) => new WebDataGridColumnsDriver(this, columnIndex);
         public WebDataGridBehaviorsDriver GetBehaviors() => new WebDataGridBehaviorsDriver(this);
         #endregion Methods
     }

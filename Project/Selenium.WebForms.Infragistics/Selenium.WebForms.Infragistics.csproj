@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WebDataGridColumnsDriver.cs" />
     <Compile Include="WebDataGridDropDownProviderDriver.cs" />
     <Compile Include="WebDataGridEditorProviderDriver.cs" />
     <Compile Include="Inside\ElementScript.cs" />

@@ -43,7 +43,7 @@ namespace Selenium.WebForms.Infragistics
             }
             else
             {
-                Js.ExecuteScript($"{GetControlId()}.set_value('{text}');");
+                Js.ExecuteScript($"{id}.set_value('{text}');");
             }
         }
 
@@ -52,7 +52,8 @@ namespace Selenium.WebForms.Infragistics
             //Id next tag, however "_clientState" is pull out .
             //But TextBoxProvider is null
             var core = (string)Js.ExecuteScript($"return document.getElementById(\"{Id}\").firstElementChild.id;");
-            return (string.IsNullOrEmpty(core)) ? string.Empty : "ig_controls." + core.Replace("_clientState", "");
+            //// EditorProvider は ig_controls.WebDataGrid1_ctlxx より参照取得
+            return (string.IsNullOrEmpty(core) || !core.Contains("_ctl")) ? string.Empty : "ig_controls." + core.Replace("_clientState", "");
         }
 
         private void EditCore(string text)
@@ -68,6 +69,7 @@ namespace Selenium.WebForms.Infragistics
                 }
                 Thread.Sleep(10);
             }
+            //WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
             SetValue(text);
             WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
         }

@@ -19,7 +19,7 @@ namespace Selenium.WebForms.Infragistics
 
         #region Constructors
 
-        internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
+        protected internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
             WebDataGrid = webDataGrid;
             RowIndex = rowIndex;
