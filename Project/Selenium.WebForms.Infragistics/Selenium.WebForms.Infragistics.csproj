@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Selenium.StandardControls, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Selenium.StandardControls.0.0.2\lib\net40\Selenium.StandardControls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -60,13 +64,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Selenium.StandardControls\Project\Selenium.StandardControls\Selenium.StandardControls.csproj">
-      <Project>{94913395-2f6b-4613-8630-e30004e69103}</Project>
-      <Name>Selenium.StandardControls</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release "../../../.nuget/nuget" pack "../../../.nuget/Selenium.WebForms.Infragistics.nuspec"
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

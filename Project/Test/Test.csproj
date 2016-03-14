@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Selenium.StandardControls, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Selenium.WebForms.Infragistics\packages\Selenium.StandardControls.0.0.2\lib\net40\Selenium.StandardControls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -73,10 +77,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Selenium.StandardControls\Project\Selenium.StandardControls\Selenium.StandardControls.csproj">
-      <Project>{94913395-2f6b-4613-8630-e30004e69103}</Project>
-      <Name>Selenium.StandardControls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Selenium.WebForms.Infragistics\Selenium.WebForms.Infragistics.csproj">
       <Project>{e4fe2124-d2f7-48df-a96a-3a161f65fb53}</Project>
       <Name>Selenium.WebForms.Infragistics</Name>
