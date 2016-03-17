@@ -118,18 +118,5 @@ namespace Test
         }
 
 
-        [TestMethod]
-        public void EditorProviderWebDataGridFirefoxDriver()
-        {
-            //Firefox is not only to specify the ig_controls a provider that can not be edited only in the pop-up ,
-            //such as the DateTimeEditorProvider
-            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-
-            var datepick1 = grid.GetEditorProvider("MainContent__webDataGrid__webDataGrid_DateTimeEditorProvider1", "ig_controls.MainContent__webDataGrid_ctl02");
-            grid.GetCell(0, 5).Activate();
-            datepick1.Edit("1976/10/28");
-            Assert.AreEqual("1976/10/28", grid.GetCell(0, 5).Text);
-
-        }
     }
 }
