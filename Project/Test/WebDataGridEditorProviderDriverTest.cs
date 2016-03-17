@@ -13,7 +13,7 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Ie);
+            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Chrome);
 #if DEBUG
             _driver.Url = "http://localhost:7570/";
 #else
@@ -39,7 +39,7 @@ namespace Test
             Thread.Sleep(10000);
 
             //DropDownProvider
-            var dropEditor = childGrid.GetDropDownProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
+            var dropEditor = childGrid.GetEditorProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
             childGrid.GetCell(0, 0).Activate();
             dropEditor.Edit("100");
             Assert.AreEqual("100", childGrid.GetCell(0, 0).Text);
@@ -81,7 +81,7 @@ namespace Test
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
 
             //DropDownProvider
-            var dropEditor = grid.GetDropDownProvider("MainContent__webDataGrid__webDataGridDropDownProvider");
+            var dropEditor = grid.GetEditorProvider("MainContent__webDataGrid__webDataGridDropDownProvider");
             grid.GetCell(0, 0).Activate();
             dropEditor.Edit("100");
             Assert.AreEqual("100", grid.GetCell(0, 0).Text);
@@ -115,6 +115,20 @@ namespace Test
             grid.GetCell(0, 7).Activate();
             numEditor1.Edit("100");
             Assert.AreEqual("100", grid.GetCell(0, 7).Text);
+        }
+
+
+        [TestMethod]
+        public void EditorProviderWebDataGridFirefoxDriver()
+        {
+            //Firefox is not only to specify the ig_controls a provider that can not be edited only in the pop-up ,
+            //such as the DateTimeEditorProvider
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+
+            var datepick1 = grid.GetEditorProvider("MainContent__webDataGrid__webDataGrid_DateTimeEditorProvider1", "ig_controls.MainContent__webDataGrid_ctl02");
+            grid.GetCell(0, 5).Activate();
+            datepick1.Edit("1976/10/28");
+            Assert.AreEqual("1976/10/28", grid.GetCell(0, 5).Text);
 
         }
     }

@@ -30,25 +30,22 @@ namespace Test
         public void TestWebDataGridColmnDriver()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            Assert.AreEqual("100", grid.GetColumn(1).Text);
+            Assert.AreEqual("苗字", grid.GetColumn(1).Text);
         }
 
         [TestMethod]
         public void TestWebDataGridDriver()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            var dropEditor = grid.GetDropDownProvider("MainContent__webDataGrid__webDataGridDropDownProvider");
+            var dropEditor = grid.GetEditorProvider("MainContent__webDataGrid__webDataGridDropDownProvider");
             var textEditor = grid.GetDataField();
             var checkEditor = grid.GetCheckBoxField();
 
             //Combo
             grid.GetCell(0, 0).Activate();
-            dropEditor.Edit(1);
+            dropEditor.Edit("100");
             Assert.AreEqual("100", grid.GetCell(0, 0).Text);
             Assert.AreEqual((long)100, grid.GetCell(0, 0).Value);
-
-            dropEditor.Edit(0);
-            Assert.AreEqual("10", grid.GetCell(0, 0).Text);
 
             var cell10 = grid.GetCell(1, 0);
             cell10.Activate();

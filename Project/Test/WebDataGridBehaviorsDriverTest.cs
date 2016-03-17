@@ -63,9 +63,9 @@ namespace Test
         [TestMethod]
         public void PageWebHierarchicalDataGrid()
         {
-            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
-            grid.GetBehaviors().Page(2);
-
+            //var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+            //Open Waiting
+            //grid.GetBehaviors().Page(2);
             //var childGrid = grid.GetRowIslands(0, 0, 0);
             //childGrid.GetBehaviors().Page(2);
         }

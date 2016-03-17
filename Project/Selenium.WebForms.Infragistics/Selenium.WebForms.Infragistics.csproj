@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WebDataGridColumnsDriver.cs" />
-    <Compile Include="WebDataGridDropDownProviderDriver.cs" />
+    <Compile Include="WebDataGridEditorProviderFirefoxDriver.cs" />
     <Compile Include="WebDataGridEditorProviderDriver.cs" />
     <Compile Include="Inside\ElementScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

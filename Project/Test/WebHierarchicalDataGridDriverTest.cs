@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
@@ -52,6 +53,8 @@ namespace Test
 
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded();
+            Thread.Sleep(2000);
+
             //Wait!
 
             var childTextEditor = childGrid.GetDataField();
@@ -75,14 +78,10 @@ namespace Test
             Assert.AreEqual(false, cell03.Value);
 
             //Combobox
-            var childDropEditor = childGrid.GetDropDownProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
+            var childDropEditor = childGrid.GetEditorProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
             childGrid.GetCell(0, 0).Activate();
-            childDropEditor.Edit(1);
-            Assert.AreEqual("100", childGrid.GetCell(0, 0).Text);
-
             childDropEditor.Edit("10");
             Assert.AreEqual("10", childGrid.GetCell(0, 0).Text);
-
             var cell10 = childGrid.GetCell(1, 0);
             cell10.Activate();
             childDropEditor.Edit("10");

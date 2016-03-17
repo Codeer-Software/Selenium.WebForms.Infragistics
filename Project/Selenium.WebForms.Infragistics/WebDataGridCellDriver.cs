@@ -5,7 +5,6 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridCellDriver
     {
-        #region Properties
 
         public WebDataGridDriver WebDataGrid { get; }
         public int RowIndex { get; }
@@ -15,9 +14,6 @@ namespace Selenium.WebForms.Infragistics
 
         public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
 
-        #endregion Properties
-
-        #region Constructors
 
         protected internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
@@ -26,9 +22,6 @@ namespace Selenium.WebForms.Infragistics
             ColIndex = colIndex;
         }
 
-        #endregion Constructors
-
-        #region Methods
 
         public void Activate()
         {
@@ -46,6 +39,5 @@ namespace Selenium.WebForms.Infragistics
             return new ElementDriver(new ElementScript(WebDataGrid.Driver, script));
         }
 
-        #endregion Methods
     }
 }
