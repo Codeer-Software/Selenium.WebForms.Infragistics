@@ -34,12 +34,11 @@ namespace Selenium.WebForms.Infragistics
             WebDataGrid.Js.ExecuteScript(setActiveCell);
         }
 
-        public ElementDriver GetElement()
+        public ElementDriver GetElement() => new ElementDriver(new ElementWebElement(GetWebElement()));
+        public IWebElement GetWebElement()
         {
             string script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
-
-            var element = (IWebElement)WebDataGrid.Js.ExecuteScript(script);
-            return new ElementDriver(new ElementWebElement(element));
+            return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
         }
 
     }
