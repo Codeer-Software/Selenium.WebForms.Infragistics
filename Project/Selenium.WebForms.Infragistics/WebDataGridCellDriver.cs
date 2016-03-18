@@ -1,4 +1,5 @@
-﻿using Selenium.StandardControls;
+﻿using OpenQA.Selenium;
+using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
 
 namespace Selenium.WebForms.Infragistics
@@ -35,8 +36,10 @@ namespace Selenium.WebForms.Infragistics
 
         public ElementDriver GetElement()
         {
-            var script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}var element={CellScript}.get_element();";
-            return new ElementDriver(new ElementScript(WebDataGrid.Driver, script));
+            string script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
+
+            var element = (IWebElement)WebDataGrid.Js.ExecuteScript(script);
+            return new ElementDriver(new ElementWebElement(element));
         }
 
     }
