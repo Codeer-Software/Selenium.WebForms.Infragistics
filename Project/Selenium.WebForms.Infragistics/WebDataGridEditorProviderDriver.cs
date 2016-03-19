@@ -7,48 +7,38 @@ namespace Selenium.WebForms.Infragistics
     public class WebDataGridEditorProviderDriver
     {
         private WebDataGridDriver WebDataGrid { get; }
-        protected string Id { get; }
-        protected IWebDriver Driver => WebDataGrid.Driver;
-        protected IJavaScriptExecutor Js => (IJavaScriptExecutor)Driver;
-
-        public WebDataGridEditorProviderDriver(WebDataGridDriver webDataGrid, string id)
+        public WebDataGridEditorProviderDriver(WebDataGridDriver webDataGrid)
         {
             WebDataGrid = webDataGrid;
-            Id = id;
         }
-
         public void Edit(string text)
         {
-            EditCore(text);
-        }
-
-        protected virtual void SetValue(string text)
-        {
-            var editor = Driver.SwitchTo().ActiveElement();
-            editor.Clear();
-            editor.SendKeys(text);
-        }
-
-        private void EditCore(string text)
-        {
             var js = new WebDataGridJSutility(WebDataGrid);
+            IWebElement element;
             while (true)
             {
                 WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
-                var e = Driver.FindElement(By.Id(Id));
-                if (e.Displayed)
+                try
                 {
-                    break;
+                    element = WebDataGrid.Driver.SwitchTo().ActiveElement();
+                    if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
+                    {
+                        break;
+                    }
+                }
+                catch (StaleElementReferenceException)
+                {
                 }
                 Thread.Sleep(10);
             }
-            SetValue(text);
+            element.Clear();
+            element.SendKeys(text);
             WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
         }
     }
 
     public static class WebDataGridEditorProviderDriverExtensions
     {
-        public static WebDataGridEditorProviderDriver GetEditorProvider(this WebDataGridDriver grid,string id) => new WebDataGridEditorProviderDriver(grid, id);
+        public static WebDataGridEditorProviderDriver GetEditorProvider(this WebDataGridDriver grid) => new WebDataGridEditorProviderDriver(grid);
     }
 }

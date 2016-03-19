@@ -37,7 +37,7 @@ namespace Test
         public void TestWebDataGridDriver()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            var dropEditor = grid.GetEditorProvider("MainContent__webDataGrid__webDataGridDropDownProvider");
+            var dropEditor = grid.GetEditorProvider();
             var textEditor = grid.GetDataField();
             var checkEditor = grid.GetCheckBoxField();
 

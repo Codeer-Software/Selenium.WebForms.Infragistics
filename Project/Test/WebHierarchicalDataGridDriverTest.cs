@@ -78,7 +78,7 @@ namespace Test
             Assert.AreEqual(false, cell03.Value);
 
             //Combobox
-            var childDropEditor = childGrid.GetEditorProvider("ctl00_MainContent__webHierarchicalDataGrid_ctl00__webHierarchicalDataGrid_DropDownProvider");
+            var childDropEditor = childGrid.GetEditorProvider();
             childGrid.GetCell(0, 0).Activate();
             childDropEditor.Edit("10");
             Assert.AreEqual("10", childGrid.GetCell(0, 0).Text);
