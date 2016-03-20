@@ -27,6 +27,18 @@ namespace Test
             _driver.Dispose();
         }
 
+        [TestMethod]
+        public void EditorProviderWebHierarchicalDataGridChild2()
+        {
+            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+            var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded();
+
+            var childGrid1 = childGrid.GetRowIslands(0, 1, 0);
+            childGrid1.SetExpanded();
+        }
+
+
 
         [TestMethod]
         public void EditorProviderWebHierarchicalDataGridChild()

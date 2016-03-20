@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using OpenQA.Selenium;
 using Selenium.WebForms.Infragistics.Inside;
@@ -7,46 +9,63 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebHierarchicalDataGridDriver : WebDataGridDriver
     {
-        public override string GridScript
+        public override string GridScript => GetScript(false);
+        private string GridExpandedScript => GetScript(true);
+
+        private class Indexs
         {
-            get
-            {
-                var grid = "grid.get_gridView()";
-                if (Islands)
-                {
-                    grid += $".get_rows().get_row({RowIndex}).get_rowIslands({RowIslandsIndex})[{ColIndex}]";
-                }
-                return grid;
-            }
+            public int RowIndex { get; set; }
+            public int RowIslandsIndex { get; set; }
+            public int ColIndex { get; set; }
+            public Indexs Parent { get; set; }
+
         }
-        private int RowIndex { get; set; }
-        private int RowIslandsIndex { get; set; }
-        private int ColIndex { get; set; }
-        private bool Islands { get; set; }
+        private Indexs Index { get; set; }
+        private int Islands { get; set; }
 
         public WebHierarchicalDataGridDriver(IWebDriver driver, string id)
             : base(driver, id)
         {
         }
 
+        private string GetScript(bool expanded)
+        {
+            var grid = "grid.get_gridView()";
+            if (Index == null) return grid;
+            var idxs = new List<Indexs> { Index };
+            var top = Index.Parent;
+            while (top != null)
+            {
+                idxs.Add(top);
+                top = top.Parent;
+            }
+            idxs.Reverse();
+            if (expanded) idxs.RemoveAt(idxs.Count - 1);
+            grid = idxs.Aggregate(grid, (current, idx) => current + $".get_rows().get_row({idx.RowIndex}).get_rowIslands({idx.RowIslandsIndex})[{idx.ColIndex}]");
+            return grid;
+        }
+
         public virtual WebHierarchicalDataGridDriver GetRowIslands(int rowIndex, int rowIslandsIndex, int colIndex)
         {
-            var island = new WebHierarchicalDataGridDriver(Driver, Id)
+            var child = new WebHierarchicalDataGridDriver(Driver, Id);
+            child.Islands += Islands;
+            child.Islands++;
+            child.Index = new Indexs()
             {
-                Islands = true,
                 RowIndex = rowIndex,
                 RowIslandsIndex = rowIslandsIndex,
-                ColIndex = colIndex
+                ColIndex = colIndex,
+                Parent = Index,
             };
-            return island;
+            return child;
         }
 
 
         public void SetExpanded()
         {
-            if (!Islands) return;
+            if (Islands == 0) return;
             var js = new WebDataGridJSutility(this);
-            Js.ExecuteScript($"{js.GetGridScript}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);");
+            Js.ExecuteScript($"{js.GetGridScript}{GridExpandedScript}.get_rows().get_row({Index.RowIndex}).set_expanded(true);");
             while (true)
             {
                 try

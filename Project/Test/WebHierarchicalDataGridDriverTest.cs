@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
@@ -18,11 +16,11 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
-#if DEBUG
-            _driver.Url = "http://localhost:7570/";
-#else
-            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
-#endif
+//#if DEBUG
+//            _driver.Url = "http://localhost:7570/";
+//#else
+//            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
+//#endif
         }
 
         [TestCleanup]
@@ -30,6 +28,19 @@ namespace Test
         {
             _driver.Dispose();
         }
+        [TestMethod]
+        public void Test()
+        {
+            _driver.Url = "http://localhost:2195/Aspx/Domain_WHDG.aspx";
+
+            var grid = new WebHierarchicalDataGridDriver(_driver, "ChronusParentMasterPlaceHolder_ChronusMasterPlaceHolder_WebHierarchicalDataGrid1");
+            var childe = grid.GetRowIslands(0, 0, 0);
+            childe.SetExpanded();
+            var groundChild = childe.GetRowIslands(0, 0, 0);
+            groundChild.SetExpanded();
+
+        }
+
 
         [TestMethod]
         public void TestWebHierarchicalDataGridDriver()
@@ -52,6 +63,8 @@ namespace Test
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
 
             var childGrid = grid.GetRowIslands(0, 0, 0);
+            var childGrid1 = childGrid.GetRowIslands(0, 0, 0);
+
             childGrid.SetExpanded();
 
             var childTextEditor = childGrid.GetDataField();
@@ -95,7 +108,6 @@ namespace Test
             childGrid.GetCell(0, 0).Activate();
             dropEditor.Edit("100");
 
-
             var childGrid1 = grid.GetRowIslands(1, 0, 0);
             childGrid1.SetExpanded();
             var dropEditor1 = childGrid1.GetEditorProvider();
@@ -104,7 +116,6 @@ namespace Test
 
             childGrid.GetCell(0, 0).Activate();
             dropEditor.Edit("200");
-
         }
     }
 }
