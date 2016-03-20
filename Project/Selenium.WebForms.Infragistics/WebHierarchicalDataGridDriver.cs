@@ -7,7 +7,6 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebHierarchicalDataGridDriver : WebDataGridDriver
     {
-        #region Properties
         public override string GridScript
         {
             get
@@ -25,24 +24,21 @@ namespace Selenium.WebForms.Infragistics
         private int ColIndex { get; set; }
         private bool Islands { get; set; }
 
-        #endregion Properties
-
-        #region Constructors
         public WebHierarchicalDataGridDriver(IWebDriver driver, string id)
             : base(driver, id)
         {
         }
-        #endregion Constructors
 
-        #region Methods
-
-        public WebHierarchicalDataGridDriver GetRowIslands(int rowIndex, int rowIslandsIndex, int colIndex)
+        public virtual WebHierarchicalDataGridDriver GetRowIslands(int rowIndex, int rowIslandsIndex, int colIndex)
         {
-            Islands = true;
-            RowIndex = rowIndex;
-            RowIslandsIndex = rowIslandsIndex;
-            ColIndex = colIndex;
-            return this;
+            var island = new WebHierarchicalDataGridDriver(Driver, Id)
+            {
+                Islands = true,
+                RowIndex = rowIndex,
+                RowIslandsIndex = rowIslandsIndex,
+                ColIndex = colIndex
+            };
+            return island;
         }
 
 
@@ -50,14 +46,19 @@ namespace Selenium.WebForms.Infragistics
         {
             if (!Islands) return;
             var js = new WebDataGridJSutility(this);
-            var expand = $"{js.GetGridScript}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);";
+            Js.ExecuteScript($"{js.GetGridScript}grid.get_gridView().get_rows().get_row({RowIndex}).set_expanded(true);");
             while (true)
             {
-                Js.ExecuteScript(expand);
+                try
+                {
+                    GetCell(0, 0).Activate();
+                    break;
+                }
+                catch (InvalidOperationException)
+                {
+                }
                 Thread.Sleep(10);
-                break;
             }
         }
-        #endregion Methods
     }
 }

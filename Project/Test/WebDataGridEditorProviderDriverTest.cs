@@ -27,16 +27,13 @@ namespace Test
             _driver.Dispose();
         }
 
+
         [TestMethod]
         public void EditorProviderWebHierarchicalDataGridChild()
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded();
-
-            //ToDo EditorProvider is All Name Change.
-
-            Thread.Sleep(10000);
 
             //DropDownProvider
             var dropEditor = childGrid.GetEditorProvider();

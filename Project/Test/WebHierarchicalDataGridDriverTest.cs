@@ -53,9 +53,6 @@ namespace Test
 
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded();
-            Thread.Sleep(2000);
-
-            //Wait!
 
             var childTextEditor = childGrid.GetDataField();
             var childCheckEditor = childGrid.GetCheckBoxField();
@@ -88,5 +85,26 @@ namespace Test
             Assert.AreEqual("10", cell10.Text);
         }
 
+        [TestMethod]
+        public void TestWebHierarchicalDataGridDriverChildWAttack()
+        {
+            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+            var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded();
+            var dropEditor = childGrid.GetEditorProvider();
+            childGrid.GetCell(0, 0).Activate();
+            dropEditor.Edit("100");
+
+
+            var childGrid1 = grid.GetRowIslands(1, 0, 0);
+            childGrid1.SetExpanded();
+            var dropEditor1 = childGrid1.GetEditorProvider();
+            childGrid1.GetCell(0, 0).Activate();
+            dropEditor1.Edit("100");
+
+            childGrid.GetCell(0, 0).Activate();
+            dropEditor.Edit("200");
+
+        }
     }
 }
