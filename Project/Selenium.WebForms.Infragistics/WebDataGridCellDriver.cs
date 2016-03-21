@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Threading;
+using OpenQA.Selenium;
 using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
 
@@ -32,6 +33,43 @@ namespace Selenium.WebForms.Infragistics
             //http://help.jp.infragistics.com/Help/doc/Silverlight/2014.1/CLR4.0/html/InfragisticsSL5.Controls.Grids.XamGrid.v14.1~Infragistics.Controls.Grids.XamGrid~SetActiveCell%28CellBase,CellAlignment,InvokeAction,Boolean,Boolean%29.html
             var setActiveCell = $"{js.GetGridScript}grid.get_element().focus();{grid}.get_behaviors().get_activation().set_activeCell({CellScript},1);";
             WebDataGrid.Js.ExecuteScript(setActiveCell);
+        }
+
+        public void Edit(string text)
+        {
+            Activate();
+            var js = new WebDataGridJSutility(WebDataGrid);
+            IWebElement element;
+            while (true)
+            {
+                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
+                try
+                {
+                    element = WebDataGrid.Driver.SwitchTo().ActiveElement();
+                    if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
+                    {
+                        break;
+                    }
+                }
+                catch (StaleElementReferenceException)
+                {
+                }
+                Thread.Sleep(10);
+            }
+
+            element.Clear();
+            element.SendKeys(text);
+            element.SendKeys(Keys.Enter);
+        }
+        public void Edit(bool check)
+        {
+            Activate();
+            var js = new WebDataGridJSutility(WebDataGrid);
+            var current = (bool)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_value();");
+            if (current != check)
+            {
+                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "activeCell.get_element().children[0].click();");
+            }
         }
 
         public ElementDriver GetElement() => new ElementDriver(GetWebElement());

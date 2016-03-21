@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
 using Selenium.WebForms.Infragistics;
 
@@ -31,8 +30,6 @@ namespace Test
             childGrid.SetExpanded();
         }
 
-
-
         [TestMethod]
         public void EditorProviderWebHierarchicalDataGridChild()
         {
@@ -41,40 +38,51 @@ namespace Test
             childGrid.SetExpanded();
 
             //DropDownProvider
-            var dropEditor = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 0).Activate();
-            dropEditor.Edit("100");
+            childGrid.GetCell(0, 0).Edit("100");
             Assert.AreEqual("100", childGrid.GetCell(0, 0).Text);
 
             //TextEditorProvider
-            var textEditor = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 2).Activate();
-            textEditor.Edit("200");
+            childGrid.GetCell(0, 2).Edit("200");
             Assert.AreEqual("200", childGrid.GetCell(0, 2).Text);
 
             //DateTimeEditorProvider
-            var datepick1 = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 4).Activate();
-            datepick1.Edit("10/28/1976");
+            childGrid.GetCell(0, 4).Edit("10/28/1976");
             Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 4).Text);
 
             //DatePickerProvider
-            var datepick2 = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 5).Activate();
-            datepick2.Edit("10/28/1976");
+            childGrid.GetCell(0, 5).Edit("10/28/1976");
             Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 5).Text);
 
             //NumericEditorProvider
-            var numEditor1 = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 6).Activate();
-            numEditor1.Edit("100");
+            childGrid.GetCell(0, 6).Edit("100");
             Assert.AreEqual("100", childGrid.GetCell(0, 6).Text);
 
             //TextBoxProvider
-            var textBox = childGrid.GetEditorProvider();
-            childGrid.GetCell(0, 7).Activate();
-            textBox.Edit("abc");
+            childGrid.GetCell(0, 7).Edit("abc");
             Assert.AreEqual("abc", childGrid.GetCell(0, 7).Text);
+        }
+
+        [TestMethod]
+        public void EditorProviderWebDataGridDriver4Attack()
+        {
+            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+
+            grid.GetCell(0, 0).Edit("Dog");
+
+            grid.GetCell(0, 1).Edit("Dog");
+
+            grid.GetCell(1, 1).Edit("Dog");
+
+            grid.GetCell(0, 0).Edit("Dog");
+
+            var grid2 = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            grid2.GetCell(0, 0).Edit("abc");
+
+            grid2.GetCell(1, 0).Edit("abc");
+
+            grid2.GetCell(1, 1).Edit("abc");
+
+            grid2.GetCell(1, 0).Edit("abc");
         }
 
         [TestMethod]
@@ -83,42 +91,31 @@ namespace Test
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
 
             //DropDownProvider
-            var dropEditor = grid.GetEditorProvider();
-            grid.GetCell(0, 0).Activate();
-            dropEditor.Edit("100");
+            grid.GetCell(0, 0).Edit("100");
             Assert.AreEqual("100", grid.GetCell(0, 0).Text);
 
             //TextBoxProvider
-            var textBox = grid.GetEditorProvider();
-            grid.GetCell(0, 3).Activate();
-            textBox.Edit("abc");
+            grid.GetCell(0, 3).Edit("abc");
             Assert.AreEqual("abc", grid.GetCell(0, 3).Text);
 
             //TextEditorProvider
-            var textEditor = grid.GetEditorProvider();
-            grid.GetCell(0, 4).Activate();
-            textEditor.Edit("200");
+            grid.GetCell(0, 4).Edit("200");
             Assert.AreEqual("200", grid.GetCell(0, 4).Text);
 
             //DateTimeEditorProvider
-            var datepick1 = grid.GetEditorProvider();
-            grid.GetCell(0, 5).Activate();
-            datepick1.Edit("10/28/1976");
+
+            grid.GetCell(0, 5).Edit("10/28/1976");
             Assert.AreEqual("10/28/1976", grid.GetCell(0, 5).Text);
 
             //DatePickerProvider
-            var datepick2 = grid.GetEditorProvider();
-            grid.GetCell(0, 6).Activate();
-            datepick2.Edit("10/28/1976");
+
+            grid.GetCell(0, 6).Edit("10/28/1976");
             Assert.AreEqual("10/28/1976", grid.GetCell(0, 6).Text);
 
             //NumericEditorProvider
-            var numEditor1 = grid.GetEditorProvider();
-            grid.GetCell(0, 7).Activate();
-            numEditor1.Edit("100");
+
+            grid.GetCell(0, 7).Edit("100");
             Assert.AreEqual("100", grid.GetCell(0, 7).Text);
         }
-
-
     }
 }

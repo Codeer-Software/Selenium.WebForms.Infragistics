@@ -49,14 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WebDataGridColumnsDriver.cs" />
-    <Compile Include="WebDataGridEditorProviderDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebDataGridBehaviorsDriver.cs" />
     <Compile Include="WebDataGridCellDriver.cs" />
     <Compile Include="WebDataGridDriver.cs" />
     <Compile Include="Inside\WebDataGridJSutility.cs" />
-    <Compile Include="WebDataGridCheckBoxFieldDriver.cs" />
-    <Compile Include="WebDataGridDataFieldDriver.cs" />
     <Compile Include="WebHierarchicalDataGridDriver.cs" />
   </ItemGroup>
   <ItemGroup>
