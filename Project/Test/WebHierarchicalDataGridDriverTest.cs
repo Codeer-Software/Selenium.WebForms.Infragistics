@@ -16,29 +16,13 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
-//#if DEBUG
-//            _driver.Url = "http://localhost:7570/";
-//#else
-//            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
-//#endif
+            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
             _driver.Dispose();
-        }
-        [TestMethod]
-        public void Test()
-        {
-            _driver.Url = "http://localhost:2195/Aspx/Domain_WHDG.aspx";
-
-            var grid = new WebHierarchicalDataGridDriver(_driver, "ChronusParentMasterPlaceHolder_ChronusMasterPlaceHolder_WebHierarchicalDataGrid1");
-            var childe = grid.GetRowIslands(0, 0, 0);
-            childe.SetExpanded();
-            var groundChild = childe.GetRowIslands(0, 0, 0);
-            groundChild.SetExpanded();
-
         }
 
 

@@ -14,11 +14,7 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Chrome);
-#if DEBUG
-            _driver.Url = "http://localhost:7570/";
-#else
             _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
-#endif
         }
 
         [TestCleanup]
@@ -33,9 +29,6 @@ namespace Test
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded();
-
-            var childGrid1 = childGrid.GetRowIslands(0, 1, 0);
-            childGrid1.SetExpanded();
         }
 
 
@@ -62,14 +55,14 @@ namespace Test
             //DateTimeEditorProvider
             var datepick1 = childGrid.GetEditorProvider();
             childGrid.GetCell(0, 4).Activate();
-            datepick1.Edit("1976/10/28");
-            Assert.AreEqual("1976/10/28", childGrid.GetCell(0, 4).Text);
+            datepick1.Edit("10/28/1976");
+            Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 4).Text);
 
             //DatePickerProvider
             var datepick2 = childGrid.GetEditorProvider();
             childGrid.GetCell(0, 5).Activate();
-            datepick2.Edit("1976/10/28");
-            Assert.AreEqual("1976/10/28", childGrid.GetCell(0, 5).Text);
+            datepick2.Edit("10/28/1976");
+            Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 5).Text);
 
             //NumericEditorProvider
             var numEditor1 = childGrid.GetEditorProvider();
@@ -110,14 +103,14 @@ namespace Test
             //DateTimeEditorProvider
             var datepick1 = grid.GetEditorProvider();
             grid.GetCell(0, 5).Activate();
-            datepick1.Edit("1976/10/28");
-            Assert.AreEqual("1976/10/28", grid.GetCell(0, 5).Text);
+            datepick1.Edit("10/28/1976");
+            Assert.AreEqual("10/28/1976", grid.GetCell(0, 5).Text);
 
             //DatePickerProvider
             var datepick2 = grid.GetEditorProvider();
             grid.GetCell(0, 6).Activate();
-            datepick2.Edit("1976/10/28");
-            Assert.AreEqual("1976/10/28", grid.GetCell(0, 6).Text);
+            datepick2.Edit("10/28/1976");
+            Assert.AreEqual("10/28/1976", grid.GetCell(0, 6).Text);
 
             //NumericEditorProvider
             var numEditor1 = grid.GetEditorProvider();
