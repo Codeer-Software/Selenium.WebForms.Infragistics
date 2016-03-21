@@ -39,7 +39,7 @@ namespace Selenium.WebForms.Infragistics
             }
             editor.Clear();
             editor.SendKeys(text);
-            WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
+            editor.SendKeys(Keys.Enter);
         }
 
         #endregion Methods

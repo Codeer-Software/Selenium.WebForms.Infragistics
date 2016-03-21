@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using OpenQA.Selenium;
 using Selenium.WebForms.Infragistics.Inside;
+using System.Linq;
 
 namespace Selenium.WebForms.Infragistics
 {
@@ -31,9 +32,10 @@ namespace Selenium.WebForms.Infragistics
                 }
                 Thread.Sleep(10);
             }
+
             element.Clear();
             element.SendKeys(text);
-            WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.ExitEditModeScript);
+            element.SendKeys(Keys.Enter);
         }
     }
 
