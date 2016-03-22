@@ -13,22 +13,34 @@ namespace Selenium.WebForms.Infragistics
             Descending,
         }
 
-        #region Properties
 
         private WebDataGridDriver WebDataGridDriver { get; }
 
-        #endregion Properties
-
-        #region Constructors
 
         public WebDataGridBehaviorsDriver(WebDataGridDriver webDataGridDriver)
         {
             WebDataGridDriver = webDataGridDriver;
         }
 
-        #endregion Constructors
+        public string GetSort(string key)
+        {
+            var grid = WebDataGridDriver.GridScript;
+            var a = ExecuteScript($" return {grid}.get_behaviors().get_sorting().sortColumn({grid}.get_columns().get_columnFromKey('{key}'))");
+            return (string)a;
+        }
+        public long GetPage()
+        {
+            return (long)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_behaviors().get_paging().get_pageIndex();") + 1;
+        }
+        public bool GetHidden(int idx)
+        {
+            return GetHidden(GetColumnKey(idx));
+        }
+        public bool GetHidden(string key)
+        {
+            return (bool)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').get_hidden();");
+        }
 
-        #region Methods
 
         public void Sort(string key, SortType sort = SortType.Ascending)
         {
@@ -133,6 +145,5 @@ namespace Selenium.WebForms.Infragistics
             return WebDataGridDriver.Js.ExecuteScript($"{js.GetGridScript}{script}");
         }
 
-        #endregion Methods
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using OpenQA.Selenium;
 using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
@@ -33,6 +34,22 @@ namespace Selenium.WebForms.Infragistics
             //http://help.jp.infragistics.com/Help/doc/Silverlight/2014.1/CLR4.0/html/InfragisticsSL5.Controls.Grids.XamGrid.v14.1~Infragistics.Controls.Grids.XamGrid~SetActiveCell%28CellBase,CellAlignment,InvokeAction,Boolean,Boolean%29.html
             var setActiveCell = $"{js.GetGridScript}grid.get_element().focus();{grid}.get_behaviors().get_activation().set_activeCell({CellScript},1);";
             WebDataGrid.Js.ExecuteScript(setActiveCell);
+        }
+
+        public void WaitForActive()
+        {
+            while (true)
+            {
+                try
+                {
+                    Activate();
+                    break;
+                }
+                catch (InvalidOperationException)
+                {
+                }
+                Thread.Sleep(10);
+            }
         }
 
         public void Edit(string text)

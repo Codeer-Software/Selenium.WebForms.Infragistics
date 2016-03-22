@@ -28,7 +28,13 @@ namespace Test
         [TestMethod]
         public void SortWebDataGridDriver()
         {
+
+            var a = _webDataGrid.GetBehaviors().GetSort("Id");
             _webDataGrid.GetBehaviors().Sort("Id", WebDataGridBehaviorsDriver.SortType.Descending);
+            _webDataGrid.GetCell(0, 0).WaitForActive();
+            var b = _webDataGrid.GetBehaviors().GetSort("Id");
+
+
         }
 
         [TestMethod]
@@ -40,13 +46,17 @@ namespace Test
         [TestMethod]
         public void PageWebDataGridDriver()
         {
+            Assert.AreEqual(_webDataGrid.GetBehaviors().GetPage(), 1);
             _webDataGrid.GetBehaviors().Page(2);
+            Assert.AreEqual(_webDataGrid.GetBehaviors().GetPage(), 2);
         }
 
         [TestMethod]
         public void HiddenWebDataGridDriver()
         {
+            Assert.AreEqual(_webDataGrid.GetBehaviors().GetHidden(2), false);
             _webDataGrid.GetBehaviors().Hidden(2);
+            Assert.AreEqual(_webDataGrid.GetBehaviors().GetHidden(2), true);
         }
 
         [TestMethod]
@@ -59,11 +69,15 @@ namespace Test
         [TestMethod]
         public void PageWebHierarchicalDataGrid()
         {
-            //var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
-            //Open Waiting
+            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             //grid.GetBehaviors().Page(2);
-            //var childGrid = grid.GetRowIslands(0, 0, 0);
-            //childGrid.GetBehaviors().Page(2);
+            //ToDo Need Waiting
+
+            var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded();
+            Assert.AreEqual(childGrid.GetBehaviors().GetPage(), 1);
+            childGrid.GetBehaviors().Page(2);
+            Assert.AreEqual(childGrid.GetBehaviors().GetPage(), 2);
         }
     }
 }
