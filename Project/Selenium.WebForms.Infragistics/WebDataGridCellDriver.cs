@@ -54,6 +54,19 @@ namespace Selenium.WebForms.Infragistics
 
         public void Edit(string text)
         {
+            Edit(text, e=> e.SendKeys(Keys.Enter));
+        }
+
+        public void Edit(string text, Action<IWebElement> finishEditing)
+        {
+            IWebElement element = ToEditingMode();
+            element.Clear();
+            element.SendKeys(text);
+            finishEditing(element);
+        }
+
+        public IWebElement ToEditingMode()
+        {
             Activate();
             var js = new WebDataGridJSutility(WebDataGrid);
             IWebElement element;
@@ -73,11 +86,9 @@ namespace Selenium.WebForms.Infragistics
                 }
                 Thread.Sleep(10);
             }
-
-            element.Clear();
-            element.SendKeys(text);
-            element.SendKeys(Keys.Enter);
+            return element;
         }
+
         public void Edit(bool check)
         {
             Activate();
