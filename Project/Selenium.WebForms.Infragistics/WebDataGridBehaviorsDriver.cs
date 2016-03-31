@@ -123,10 +123,11 @@ namespace Selenium.WebForms.Infragistics
         {
             var grid = WebDataGridDriver.GridScript;
 
+            //http://help.jp.infragistics.com/Help/doc/ASPNET/2014.2/CLR4.0/html/WebDataGrid_Filtering.html
             var script = new StringBuilder();
             script.AppendLine($"var columnFilter = {grid}.get_behaviors().get_filtering().create_columnFilter('{key}');");
             script.AppendLine("var condition = columnFilter.get_condition();");
-            //script.AppendLine("condition.set_rule($IG.TextFilterRules.Equals);");
+            script.AppendLine("condition.set_rule($IG.TextFilterRules.Equals);");
             if (value != "") script.AppendLine($"condition.set_value('{value}');");
             script.AppendLine("var columnFilters = new Array(columnFilter);");
             script.AppendLine($"{grid}.get_behaviors().get_filtering().add_columnFilterRange(columnFilters);");
