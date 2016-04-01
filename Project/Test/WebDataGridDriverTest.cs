@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
 using Selenium.WebForms.Infragistics;
 
@@ -21,6 +22,14 @@ namespace Test
         {
             _driver.Dispose();
         }
+
+        [TestMethod]
+        public void TestGetCells()
+        {
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            Assert.AreEqual("松井", grid.GetCells(0).ElementAt(1).Text);
+        }
+
 
         [TestMethod]
         public void TestWebDataGridColmnDriver()

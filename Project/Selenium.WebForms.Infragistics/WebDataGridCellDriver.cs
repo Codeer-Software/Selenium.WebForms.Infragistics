@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using OpenQA.Selenium;
 using Selenium.StandardControls;
@@ -8,23 +9,20 @@ namespace Selenium.WebForms.Infragistics
 {
     public class WebDataGridCellDriver
     {
-
         public WebDataGridDriver WebDataGrid { get; }
         public int RowIndex { get; }
         public int ColIndex { get; }
         public string Text => (string)WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_text();");
         public object Value => WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_value();");
-
         public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
 
 
-        protected internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
+        internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
             WebDataGrid = webDataGrid;
             RowIndex = rowIndex;
             ColIndex = colIndex;
         }
-
 
         public void Activate()
         {
