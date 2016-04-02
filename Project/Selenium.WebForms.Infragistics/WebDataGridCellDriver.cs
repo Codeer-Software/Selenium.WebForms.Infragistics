@@ -98,7 +98,7 @@ namespace Selenium.WebForms.Infragistics
             }
         }
 
-        public ElementDriver GetElement() => new ElementDriver(GetWebElement());
+        public ElementInfo GetElement() => new ElementInfo(GetWebElement());
         public IWebElement GetWebElement()
         {
             string script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
