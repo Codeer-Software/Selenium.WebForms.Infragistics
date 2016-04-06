@@ -10,7 +10,7 @@ namespace Selenium.WebForms.Infragistics
         public IWebDriver Driver { get;  }
         public string Id { get; }
         public IJavaScriptExecutor Js => (IJavaScriptExecutor)Driver;
-        public virtual string GridScript => "grid";
+        public virtual string GridScript => WebDataGridJSutility.GridScript;
         public WebDataGridDriver(IWebDriver driver, string id)
         {
             Driver = driver;
@@ -28,7 +28,7 @@ namespace Selenium.WebForms.Infragistics
             }
         }
 
-        public long RowLength => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_rows().get_length();");
+        public long RowCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_rows().get_length();");
 
         public WebDataGridColumnsDriver GetColumn(int columnIndex) => new WebDataGridColumnsDriver(this, columnIndex);
         public WebDataGridBehaviorsDriver GetBehaviors() => new WebDataGridBehaviorsDriver(this);

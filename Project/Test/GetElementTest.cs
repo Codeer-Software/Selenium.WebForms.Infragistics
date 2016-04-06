@@ -14,7 +14,7 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver();
-            _driver.Url = "http://infragisticswebformssample.azurewebsites.net/";
+            _driver.Url = TestCommon.TargetUrl;
         }
 
         [TestCleanup]
@@ -28,27 +28,27 @@ namespace Test
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
 
-            var fst = grid.GetCell(0, 0).GetElement().FontItalic;
-            var fw = grid.GetCell(0, 0).GetElement().FontBold;
-            var fs = grid.GetCell(0, 0).GetElement().FontSize;
-            var tu = grid.GetCell(0, 0).GetElement().TextUnderline;
-            var tlt = grid.GetCell(0, 0).GetElement().TextLineThrough;
-            var im = grid.GetCell(0, 0).GetElement().ImeMode;
-            var t = grid.GetCell(0, 0).GetElement().Text;
-            var v = grid.GetCell(0, 0).GetElement().Value;
-            var ih = grid.GetCell(0, 0).GetElement().InnerHtml;
-            var it = grid.GetCell(0, 0).GetElement().InnerText;
-            var w = grid.GetCell(0, 0).GetElement().Width;
-            var h = grid.GetCell(0, 0).GetElement().Height;
-            var f = grid.GetCell(0, 0).GetElement().Font;
-            var c = grid.GetCell(0, 0).GetElement().Color;
-            var bgc = grid.GetCell(0, 0).GetElement().BackGroundColor;
-            var bgi = grid.GetCell(0, 0).GetElement().BackGroundImage;
-            var ta = grid.GetCell(0, 0).GetElement().TextAlign;
+            var fst = grid.GetCell(0, 0).Info.FontItalic;
+            var fw = grid.GetCell(0, 0).Info.FontBold;
+            var fs = grid.GetCell(0, 0).Info.FontSize;
+            var tu = grid.GetCell(0, 0).Info.TextUnderline;
+            var tlt = grid.GetCell(0, 0).Info.TextLineThrough;
+            var im = grid.GetCell(0, 0).Info.ImeMode;
+            var t = grid.GetCell(0, 0).Info.Text;
+            var v = grid.GetCell(0, 0).Info.Value;
+            var ih = grid.GetCell(0, 0).Info.InnerHtml;
+            var it = grid.GetCell(0, 0).Info.InnerText;
+            var w = grid.GetCell(0, 0).Info.Width;
+            var h = grid.GetCell(0, 0).Info.Height;
+            var f = grid.GetCell(0, 0).Info.Font;
+            var c = grid.GetCell(0, 0).Info.Color;
+            var bgc = grid.GetCell(0, 0).Info.BackGroundColor;
+            var bgi = grid.GetCell(0, 0).Info.BackGroundImage;
+            var ta = grid.GetCell(0, 0).Info.TextAlign;
 
-            var cn = grid.GetCell(0, 0).GetElement().CssClass;
-            var ti = grid.GetCell(0, 0).GetElement().TabIndex;
-            var ml = grid.GetCell(0, 0).GetElement().MaxLength;
+            var cn = grid.GetCell(0, 0).Info.CssClass;
+            var ti = grid.GetCell(0, 0).Info.TabIndex;
+            var ml = grid.GetCell(0, 0).Info.MaxLength;
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Selenium.WebForms.Infragistics
 
         private string GetScript(bool expanded)
         {
+            //TODOWebDataGridJSutilityに移動
             var grid = "grid.get_gridView()";
             if (Index == null) return grid;
             var idxs = new List<Indexs> { Index };
@@ -61,11 +62,11 @@ namespace Selenium.WebForms.Infragistics
         }
 
 
-        public void SetExpanded()
+        public void SetExpanded(bool isExpanded)
         {
             if (Islands == 0) return;
             var js = new WebDataGridJSutility(this);
-            Js.ExecuteScript($"{js.GetGridScript}{GridExpandedScript}.get_rows().get_row({Index.RowIndex}).set_expanded(true);");
+            Js.ExecuteScript($"{js.GetGridScript}{GridExpandedScript}.get_rows().get_row({Index.RowIndex}).set_expanded({isExpanded.ToString().ToLower()});");
             while (true)
             {
                 try

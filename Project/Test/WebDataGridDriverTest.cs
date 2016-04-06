@@ -14,7 +14,7 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
-            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
+            _driver.Url = TestCommon.TargetUrl;
         }
 
         [TestCleanup]

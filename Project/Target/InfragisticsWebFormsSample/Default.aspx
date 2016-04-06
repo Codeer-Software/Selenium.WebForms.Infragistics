@@ -364,11 +364,6 @@
                             </ig:Paging>
                             <ig:ColumnMoving>
                             </ig:ColumnMoving>
-                            <ig:ColumnFixing>
-                                <ColumnSettings>
-                                    <ig:ColumnFixingSetting ColumnKey="Id" />
-                                </ColumnSettings>
-                            </ig:ColumnFixing>
                         </Behaviors>
                     </ig:WebDataGrid>
                 </div>

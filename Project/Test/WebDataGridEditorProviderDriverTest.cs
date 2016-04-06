@@ -13,7 +13,7 @@ namespace Test
         public void TestInitialize()
         {
             _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Chrome);
-            _driver.Url = "http://seleniumwebformsinfragistics.azurewebsites.net/";
+            _driver.Url = TestCommon.TargetUrl;
         }
 
         [TestCleanup]
@@ -27,7 +27,7 @@ namespace Test
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var childGrid = grid.GetRowIslands(0, 0, 0);
-            childGrid.SetExpanded();
+            childGrid.SetExpanded(true);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace Test
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
             var childGrid = grid.GetRowIslands(0, 0, 0);
-            childGrid.SetExpanded();
+            childGrid.SetExpanded(true);
 
             //DropDownProvider
             childGrid.GetCell(0, 0).Edit("100");

@@ -22,25 +22,25 @@ namespace Selenium.WebForms.Infragistics
             WebDataGridDriver = webDataGridDriver;
         }
 
-        public string GetSort(string key)
+        public bool IsHidden(int idx)
         {
-            var grid = WebDataGridDriver.GridScript;
-            var a = ExecuteScript($" return {grid}.get_behaviors().get_sorting().sortColumn({grid}.get_columns().get_columnFromKey('{key}'))");
-            return (string)a;
+            return IsHidden(GetColumnKey(idx));
         }
-        public long GetPage()
-        {
-            return (long)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_behaviors().get_paging().get_pageIndex();") + 1;
-        }
-        public bool GetHidden(int idx)
-        {
-            return GetHidden(GetColumnKey(idx));
-        }
-        public bool GetHidden(string key)
+
+        public bool IsHidden(string key)
         {
             return (bool)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').get_hidden();");
         }
 
+        public void Hide(string key, bool hidden = true)
+        {
+            ExecuteScript($"{WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').set_hidden({hidden.ToString().ToLower()});");
+        }
+
+        public void Hide(int idx, bool hidden = true)
+        {
+            Hide(GetColumnKey(idx), hidden);
+        }
 
         public void Sort(string key, SortType sort = SortType.Ascending)
         {
@@ -62,48 +62,27 @@ namespace Selenium.WebForms.Infragistics
             Filter(GetColumnKey(idx), value, rule);
         }
 
-        public void Page(int page)
+        public long GetPageIndex()
         {
-            SetPage(page);
+            return (long)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_behaviors().get_paging().get_pageIndex();") + 1;
         }
 
-        public void Hidden(string key, bool hidden = true)
-        {
-            SetHidden(key, hidden);
-        }
-
-        public void Hidden(int idx, bool hidden = true)
-        {
-            Hidden(GetColumnKey(idx), hidden);
-        }
-
-        public void Fix(string key, bool fix = true)
-        {
-            SetFix(key, fix);
-        }
-
-        public void Fix(int idx, bool fix = true)
-        {
-            SetFix(GetColumnKey(idx), fix);
-        }
-
-        //ToDo  I want to write fixColumn. But fixColumn is nothing. fixColumnByKey
-        private void SetFix(string key, bool fix)
-        {
-            var columnByKey = fix ? "fixColumnByKey" : "unfixColumnByKey";
-            ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_columnFixing().{columnByKey}('{key}', $IG.FixLocation.Left)");
-        }
-
-        private void SetHidden(string key, bool hidden)
-        {
-            ExecuteScript($"{WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').set_hidden({hidden.ToString().ToLower()});");
-        }
-
-        private void SetPage(int page)
+        public void SetPageIndex(int page)
         {
             ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_paging().set_pageIndex({page - 1});");
         }
 
+        public void Fix(string key, bool fix = true)
+        {
+            var columnByKey = fix ? "fixColumnByKey" : "unfixColumnByKey";
+            ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_columnFixing().{columnByKey}('{key}', $IG.FixLocation.Left)");
+        }
+        
+        public void Fix(int idx, bool fix = true)
+        {
+            Fix(GetColumnKey(idx), fix);
+        }
+        
         private void SetSort(string key, SortType sort)
         {
             int type;
@@ -145,6 +124,5 @@ namespace Selenium.WebForms.Infragistics
             var js = new WebDataGridJSutility(WebDataGridDriver);
             return WebDataGridDriver.Js.ExecuteScript($"{js.GetGridScript}{script}");
         }
-
     }
 }

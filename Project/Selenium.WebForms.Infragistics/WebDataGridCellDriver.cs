@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
 
@@ -34,20 +36,10 @@ namespace Selenium.WebForms.Infragistics
             WebDataGrid.Js.ExecuteScript(setActiveCell);
         }
 
-        public void WaitForActive()
+        public void Show()
         {
-            while (true)
-            {
-                try
-                {
-                    Activate();
-                    break;
-                }
-                catch (InvalidOperationException)
-                {
-                }
-                Thread.Sleep(10);
-            }
+            var remote = Element as RemoteWebElement;
+            remote.LocationOnScreenOnceScrolledIntoView.ToString();
         }
 
         public void Edit(string text)
@@ -58,19 +50,32 @@ namespace Selenium.WebForms.Infragistics
         public void Edit(string text, Action<IWebElement> finishEditing)
         {
             IWebElement element = ToEditingMode();
-            element.Clear();
+            try
+            {
+                WebDataGrid.Js.ExecuteScript("arguments[0].select();", element);
+                element.SendKeys(Keys.Delete);
+            }
+            catch
+            {
+                try
+                {
+                    element.Clear();
+                }
+                catch {}
+            }
             element.SendKeys(text);
             finishEditing(element);
         }
 
         public IWebElement ToEditingMode()
         {
+            Show();
             Activate();
             var js = new WebDataGridJSutility(WebDataGrid);
             IWebElement element;
             while (true)
             {
-                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
+                new Actions(WebDataGrid.Driver).DoubleClick(Element).Build().Perform();
                 try
                 {
                     element = WebDataGrid.Driver.SwitchTo().ActiveElement();
@@ -89,20 +94,26 @@ namespace Selenium.WebForms.Infragistics
 
         public void Edit(bool check)
         {
+            Show();
             Activate();
             var js = new WebDataGridJSutility(WebDataGrid);
-            var current = (bool)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_value();");
+            var current = (bool)Value;
             if (current != check)
             {
-                WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "activeCell.get_element().children[0].click();");
+                var core = (IWebElement)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_element().children[0];");
+                core.Click();
             }
         }
 
-        public ElementInfo GetElement() => new ElementInfo(GetWebElement());
-        public IWebElement GetWebElement()
+        public ElementInfo Info => new ElementInfo(Element);
+        public IWebElement Element
         {
-            string script = $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
-            return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
+            get
+            {
+                string script =
+                    $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
+                return (IWebElement) WebDataGrid.Js.ExecuteScript(script);
+            }
         }
 
     }
