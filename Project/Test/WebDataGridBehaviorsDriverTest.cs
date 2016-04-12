@@ -63,7 +63,7 @@ namespace Test
             //    .Build();
 
         }
-        
+
         [TestMethod]
         public void FilterWebDataGridDriver()
         {
@@ -97,9 +97,6 @@ namespace Test
         public void PageWebHierarchicalDataGrid()
         {
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
-            //grid.GetBehaviors().Page(2);
-            //ToDo Need Waiting
-
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded(true);
             Assert.AreEqual(childGrid.GetBehaviors().GetPageIndex(), 1);
