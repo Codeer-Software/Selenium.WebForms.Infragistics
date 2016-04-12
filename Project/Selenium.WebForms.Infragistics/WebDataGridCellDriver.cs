@@ -75,9 +75,10 @@ namespace Selenium.WebForms.Infragistics
             IWebElement element;
             while (true)
             {
-                new Actions(WebDataGrid.Driver).DoubleClick(Element).Build().Perform();
                 try
                 {
+                    // Combo box corresponding to are calling in a row
+                    new Actions(WebDataGrid.Driver).DoubleClick(Element).Build().Perform();
                     element = WebDataGrid.Driver.SwitchTo().ActiveElement();
                     if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
                     {

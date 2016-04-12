@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Selenium.StandardControls, Version=0.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Selenium.WebForms.Infragistics\packages\Selenium.StandardControls.0.0.8\lib\net40\Selenium.StandardControls.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +71,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BrowserUtil.cs" />
+    <Compile Include="ChainingAssertion.MSTest.cs" />
     <Compile Include="GetElementTest.cs" />
     <Compile Include="WebDataGridBehaviorsDriverTest.cs" />
     <Compile Include="WebDataGridEditorProviderDriverTest.cs" />

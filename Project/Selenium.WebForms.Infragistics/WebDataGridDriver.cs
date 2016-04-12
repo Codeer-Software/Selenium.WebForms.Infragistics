@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using OpenQA.Selenium;
 using Selenium.WebForms.Infragistics.Inside;
 
@@ -25,6 +26,14 @@ namespace Selenium.WebForms.Infragistics
             for (int i = 0; i < count; i++)
             {
                 yield return GetCell(rowIndex, i);
+            }
+        }
+        public void WaitForIgAjax()
+        {
+            var wait = Driver.FindElements(By.ClassName("ig_AjaxIndicator")).FirstOrDefault();
+            while (wait != null && wait.Displayed)
+            {
+                Thread.Sleep(10);
             }
         }
 

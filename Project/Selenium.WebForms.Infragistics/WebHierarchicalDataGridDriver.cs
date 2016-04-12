@@ -67,18 +67,7 @@ namespace Selenium.WebForms.Infragistics
             if (Islands == 0) return;
             var js = new WebDataGridJSutility(this);
             Js.ExecuteScript($"{js.GetGridScript}{GridExpandedScript}.get_rows().get_row({Index.RowIndex}).set_expanded({isExpanded.ToString().ToLower()});");
-            while (true)
-            {
-                try
-                {
-                    GetCell(0, 0).Activate();
-                    break;
-                }
-                catch (InvalidOperationException)
-                {
-                }
-                Thread.Sleep(10);
-            }
+            WaitForIgAjax();
         }
     }
 }

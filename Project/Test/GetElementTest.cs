@@ -28,27 +28,26 @@ namespace Test
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
 
-            var fst = grid.GetCell(0, 0).Info.FontItalic;
-            var fw = grid.GetCell(0, 0).Info.FontBold;
-            var fs = grid.GetCell(0, 0).Info.FontSize;
-            var tu = grid.GetCell(0, 0).Info.TextUnderline;
-            var tlt = grid.GetCell(0, 0).Info.TextLineThrough;
-            var im = grid.GetCell(0, 0).Info.ImeMode;
-            var t = grid.GetCell(0, 0).Info.Text;
-            var v = grid.GetCell(0, 0).Info.Value;
-            var ih = grid.GetCell(0, 0).Info.InnerHtml;
-            var it = grid.GetCell(0, 0).Info.InnerText;
-            var w = grid.GetCell(0, 0).Info.Width;
-            var h = grid.GetCell(0, 0).Info.Height;
-            var f = grid.GetCell(0, 0).Info.Font;
-            var c = grid.GetCell(0, 0).Info.Color;
-            var bgc = grid.GetCell(0, 0).Info.BackGroundColor;
-            var bgi = grid.GetCell(0, 0).Info.BackGroundImage;
-            var ta = grid.GetCell(0, 0).Info.TextAlign;
-
-            var cn = grid.GetCell(0, 0).Info.CssClass;
-            var ti = grid.GetCell(0, 0).Info.TabIndex;
-            var ml = grid.GetCell(0, 0).Info.MaxLength;
+            grid.GetCell(0, 0).Info.InnerHtml.Is("1");
+            grid.GetCell(0, 0).Info.InnerText.Is("1");
+            grid.GetCell(0, 0).Info.Text.IsNull();
+            grid.GetCell(0, 0).Info.Value.IsNull();
+            //grid.GetCell(0, 0).Info.CssClass;
+            grid.GetCell(0, 0).Info.Width.Is("93px");
+            grid.GetCell(0, 0).Info.Height.Is("31px");
+            grid.GetCell(0, 0).Info.FontSize.Is("13px");
+            grid.GetCell(0, 0).Info.Font.Is("'Segoe UI', Verdana, Helvetica, sans-serif");
+            grid.GetCell(0, 0).Info.FontBold.IsFalse();
+            grid.GetCell(0, 0).Info.FontItalic.IsFalse();
+            grid.GetCell(0, 0).Info.TextUnderline.IsTrue();
+            grid.GetCell(0, 0).Info.TextLineThrough.IsTrue();
+            grid.GetCell(0, 0).Info.Color.Is("rgba(255, 255, 255, 1)");
+            grid.GetCell(0, 0).Info.BackGroundColor.Is("rgba(219, 112, 147, 1)");
+            grid.GetCell(0, 0).Info.BackGroundImage.Is("none");
+            grid.GetCell(0, 0).Info.TabIndex.Is(-1);
+            grid.GetCell(0, 0).Info.ImeMode.Is("");
+            grid.GetCell(0, 0).Info.MaxLength.IsNull();
+            grid.GetCell(0, 0).Info.TextAlign.Is("left");
         }
     }
 }
