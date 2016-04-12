@@ -28,14 +28,6 @@ namespace Selenium.WebForms.Infragistics
                 yield return GetCell(rowIndex, i);
             }
         }
-        public void WaitForIgAjax()
-        {
-            var wait = Driver.FindElements(By.ClassName("ig_AjaxIndicator")).FirstOrDefault();
-            while (wait != null && wait.Displayed)
-            {
-                Thread.Sleep(10);
-            }
-        }
 
         public long RowCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_rows().get_length();");
 

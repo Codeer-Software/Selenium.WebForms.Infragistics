@@ -14,5 +14,13 @@ namespace Selenium.WebForms.Infragistics
                 Thread.Sleep(10);
             }
         }
+        public static void WaitForShowAjaxIndicator(IWebDriver driver)
+        {
+            var wait = driver.FindElements(By.ClassName("ig_AjaxIndicator")).FirstOrDefault();
+            while (wait != null && !wait.Displayed)
+            {
+                Thread.Sleep(10);
+            }
+        }
     }
 }
