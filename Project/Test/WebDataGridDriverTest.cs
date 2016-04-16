@@ -24,6 +24,13 @@ namespace Test
         }
 
         [TestMethod]
+        public void TestColumnCount()
+        {
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            grid.ColumnCount.Is(8);
+        }
+
+        [TestMethod]
         public void TestGetActiveCellElement()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");

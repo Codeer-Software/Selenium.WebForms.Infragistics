@@ -65,6 +65,11 @@ namespace Test
         }
 
         [TestMethod]
+        public void ReadOnlyWebDataGridDriver()
+        {
+            _webDataGrid.GetBehaviors().IsReadOnly(0).IsFalse();
+        }
+        [TestMethod]
         public void FilterWebDataGridDriver()
         {
             _webDataGrid.GetBehaviors().Filter("LastName", "Ishikawa");

@@ -21,10 +21,14 @@ namespace Selenium.WebForms.Infragistics
         {
             WebDataGridDriver = webDataGridDriver;
         }
-
-        public bool IsHidden(int idx)
+        public bool IsReadOnly(int index)
         {
-            return IsHidden(GetColumnKey(idx));
+            return (bool)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_behaviors().get_editingCore().get_behaviors().get_cellEditing().get_columnSettings()._items[{index}]._readOnly;");
+        }
+
+        public bool IsHidden(int index)
+        {
+            return IsHidden(GetColumnKey(index));
         }
 
         public bool IsHidden(string key)
@@ -37,9 +41,9 @@ namespace Selenium.WebForms.Infragistics
             ExecuteScript($"{WebDataGridDriver.GridScript}.get_columns().get_columnFromKey('{key}').set_hidden({hidden.ToString().ToLower()});");
         }
 
-        public void Hide(int idx, bool hidden = true)
+        public void Hide(int index, bool hidden = true)
         {
-            Hide(GetColumnKey(idx), hidden);
+            Hide(GetColumnKey(index), hidden);
         }
 
         public void Sort(string key, SortType sort = SortType.Ascending)
@@ -47,9 +51,9 @@ namespace Selenium.WebForms.Infragistics
             SetSort(key, sort);
         }
 
-        public void Sort(int idx, SortType sort = SortType.Ascending)
+        public void Sort(int index, SortType sort = SortType.Ascending)
         {
-            Sort(GetColumnKey(idx), sort);
+            Sort(GetColumnKey(index), sort);
         }
 
         public void Filter(string key, string value = "", string rule = "$IG.TextFilterRules.Equals")
@@ -57,9 +61,9 @@ namespace Selenium.WebForms.Infragistics
             SetFilter(key, value, rule);
         }
 
-        public void Filter(int idx, string value = "", string rule = "$IG.TextFilterRules.Equals")
+        public void Filter(int index, string value = "", string rule = "$IG.TextFilterRules.Equals")
         {
-            Filter(GetColumnKey(idx), value, rule);
+            Filter(GetColumnKey(index), value, rule);
         }
 
         public long GetPageIndex()
@@ -77,12 +81,12 @@ namespace Selenium.WebForms.Infragistics
             var columnByKey = fix ? "fixColumnByKey" : "unfixColumnByKey";
             ExecuteScript($"{WebDataGridDriver.GridScript}.get_behaviors().get_columnFixing().{columnByKey}('{key}', $IG.FixLocation.Left)");
         }
-        
-        public void Fix(int idx, bool fix = true)
+
+        public void Fix(int index, bool fix = true)
         {
-            Fix(GetColumnKey(idx), fix);
+            Fix(GetColumnKey(index), fix);
         }
-        
+
         private void SetSort(string key, SortType sort)
         {
             int type;
@@ -114,9 +118,9 @@ namespace Selenium.WebForms.Infragistics
             ExecuteScript(script.ToString());
         }
 
-        private string GetColumnKey(int idx)
+        private string GetColumnKey(int index)
         {
-            return (string)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_columns().get_column({idx}).get_key()");
+            return (string)ExecuteScript($"return {WebDataGridDriver.GridScript}.get_columns().get_column({index}).get_key()");
         }
 
         private object ExecuteScript(string script)
