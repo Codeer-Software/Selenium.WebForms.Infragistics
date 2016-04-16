@@ -115,7 +115,6 @@ namespace Selenium.WebForms.Infragistics
                 Thread.Sleep(10);
             }
         }
-
         public ElementInfo Info => new ElementInfo(Element);
         public IWebElement Element
         {

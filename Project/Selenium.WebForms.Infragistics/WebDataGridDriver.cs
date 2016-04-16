@@ -18,6 +18,12 @@ namespace Selenium.WebForms.Infragistics
             Id = id;
         }
 
+        public IWebElement GetActiveCellElement()
+        {
+            var js = new WebDataGridJSutility(this);
+            return (IWebElement)Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_element();");
+        }
+
         public virtual WebDataGridCellDriver GetCell(int rowIndex, int colIndex) => new WebDataGridCellDriver(this, rowIndex, colIndex);
         public IEnumerable<WebDataGridCellDriver> GetCells(int rowIndex)
         {

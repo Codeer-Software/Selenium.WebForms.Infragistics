@@ -24,6 +24,17 @@ namespace Test
         }
 
         [TestMethod]
+        public void TestGetActiveCellElement()
+        {
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            grid.GetCell(1, 1).Element.Click();
+            var element = grid.GetActiveCellElement();
+            grid.GetCell(0, 0).Element.Click();
+            var element2 = grid.GetActiveCellElement();
+            element.Text.IsNot(element2.Text);
+        }
+
+        [TestMethod]
         public void TestGetCells()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
