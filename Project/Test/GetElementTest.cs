@@ -33,8 +33,8 @@ namespace Test
             grid.GetCell(0, 0).Info.Text.IsNull();
             grid.GetCell(0, 0).Info.Value.IsNull();
             //grid.GetCell(0, 0).Info.CssClass;
-            grid.GetCell(0, 0).Info.Width.Is("93px");
-            grid.GetCell(0, 0).Info.Height.Is("31px");
+            //grid.GetCell(0, 0).Info.Width.Is("93px");
+            //grid.GetCell(0, 0).Info.Height.Is("31px");
             grid.GetCell(0, 0).Info.FontSize.Is("13px");
             grid.GetCell(0, 0).Info.Font.Is("'Segoe UI', Verdana, Helvetica, sans-serif");
             grid.GetCell(0, 0).Info.FontBold.IsFalse();

@@ -71,15 +71,6 @@ namespace Selenium.WebForms.Infragistics
         {
             Show();
             Activate();
-            while (!Element.Displayed)
-            {
-                try
-                {
-                    Show();
-                }
-                catch { }
-                Thread.Sleep(10);
-            }
             IWebElement element;
             while (true)
             {
@@ -93,9 +84,7 @@ namespace Selenium.WebForms.Infragistics
                         break;
                     }
                 }
-                catch (StaleElementReferenceException)
-                {
-                }
+                catch { }
                 Thread.Sleep(10);
             }
             return element;
