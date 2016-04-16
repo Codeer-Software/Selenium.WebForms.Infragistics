@@ -71,7 +71,15 @@ namespace Selenium.WebForms.Infragistics
         {
             Show();
             Activate();
-            var js = new WebDataGridJSutility(WebDataGrid);
+            while (!Element.Displayed)
+            {
+                try
+                {
+                    Show();
+                }
+                catch { }
+                Thread.Sleep(10);
+            }
             IWebElement element;
             while (true)
             {
@@ -98,11 +106,13 @@ namespace Selenium.WebForms.Infragistics
             Show();
             Activate();
             var js = new WebDataGridJSutility(WebDataGrid);
-            var current = (bool)Value;
-            if (current != check)
+            while ((bool)Value != check)
             {
+                Show();
                 var core = (IWebElement)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_element().children[0];");
                 core.Click();
+                if ((bool)Value == check) break;
+                Thread.Sleep(10);
             }
         }
 
