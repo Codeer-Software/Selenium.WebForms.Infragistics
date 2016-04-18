@@ -72,7 +72,7 @@ namespace Test
         [TestMethod]
         public void FilterWebDataGridDriver()
         {
-            _webDataGrid.GetBehaviors().Filter("LastName", "Ishikawa");
+            _webDataGrid.GetBehaviors().Filter("LastName", 1, "Ishikawa");
         }
 
         [TestMethod]

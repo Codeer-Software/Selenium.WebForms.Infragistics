@@ -56,14 +56,14 @@ namespace Selenium.WebForms.Infragistics
             Sort(GetColumnKey(index), sort);
         }
 
-        public void Filter(string key, string value = "", string rule = "$IG.TextFilterRules.Equals")
+        public void Filter(string key, int filterIndex, string value)
         {
-            SetFilter(key, value, rule);
+            SetFilter(key, value, filterIndex.ToString());
         }
 
-        public void Filter(int index, string value = "", string rule = "$IG.TextFilterRules.Equals")
+        public void Filter(int index, int filterIndex, string value)
         {
-            Filter(GetColumnKey(index), value, rule);
+            Filter(GetColumnKey(index), filterIndex, value);
         }
 
         public long GetPageIndex()
