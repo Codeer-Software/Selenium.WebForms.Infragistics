@@ -344,7 +344,7 @@
                                     </ig:RowAdding>
                                     <ig:CellEditing>
                                         <ColumnSettings>
-                                            <ig:EditingColumnSetting ColumnKey="Id" EditorID="_webDataGridDropDownProvider" />
+                                            <ig:EditingColumnSetting ColumnKey="Id" EditorID="_webDataGridDropDownProvider"  />
                                             <ig:EditingColumnSetting ColumnKey="Tel" EditorID="_webDataGridTextBoxProvider" />
                                             <ig:EditingColumnSetting ColumnKey="Sex" EditorID="_webDataGrid_TextEditorProvider1" />
                                             <ig:EditingColumnSetting ColumnKey="Age" EditorID="_webDataGrid_NumericEditorProvider1" />
@@ -358,6 +358,8 @@
                             </ig:Activation>
                             <ig:Sorting AscendingImageAltText="昇順画像" DescendingImageAltText="降順画像">
                             </ig:Sorting>
+                            <ig:ColumnFixing>
+                            </ig:ColumnFixing>
                             <ig:Filtering>
                             </ig:Filtering>
                             <ig:Paging PageSize="2">
