@@ -46,11 +46,11 @@ namespace Test
             Assert.AreEqual("200", childGrid.GetCell(0, 2).Text);
 
             //DateTimeEditorProvider
-            childGrid.GetCell(0, 4).Edit("10/28/1976"); //<- Azure 
+            childGrid.GetCell(0, 4).Edit("10/28/1976"); //<- Azure
             Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 4).Text);
 
             //DatePickerProvider
-            childGrid.GetCell(0, 5).Edit("10/28/1976"); 
+            childGrid.GetCell(0, 5).Edit("10/28/1976");
             Assert.AreEqual("10/28/1976", childGrid.GetCell(0, 5).Text);
 
             //NumericEditorProvider

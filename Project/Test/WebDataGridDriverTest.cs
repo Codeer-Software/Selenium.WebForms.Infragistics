@@ -29,7 +29,7 @@ namespace Test
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
             grid.ColumnCount.Is(8);
         }
-        
+
         [TestMethod]
         public void TestGetActiveCellElement()
         {
@@ -79,6 +79,25 @@ namespace Test
             var cell12 = grid.GetCell(1, 2);
             grid.GetCell(1, 2).Edit(true);
             Assert.AreEqual(true, cell12.Value);
+        }
+        [TestMethod]
+        public void PageWebDataGridDriver()
+        {
+            var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
+            Assert.AreEqual(grid.GetPageIndex(), 1);
+            grid.SetPageIndex(2);
+            Assert.AreEqual(grid.GetPageIndex(), 2);
+        }
+
+        [TestMethod]
+        public void PageWebHierarchicalDataGrid()
+        {
+            var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+            var childGrid = grid.GetRowIslands(0, 0, 0);
+            childGrid.SetExpanded(true);
+            Assert.AreEqual(childGrid.GetPageIndex(), 1);
+            childGrid.SetPageIndex(2);
+            Assert.AreEqual(childGrid.GetPageIndex(), 2);
         }
     }
 }
