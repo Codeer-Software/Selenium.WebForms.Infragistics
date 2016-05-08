@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Selenium.StandardControls, Version=0.0.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Selenium.StandardControls.0.0.20\lib\net40\Selenium.StandardControls.dll</HintPath>
+    <Reference Include="Selenium.StandardControls, Version=0.0.21.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Selenium.StandardControls.0.0.21\lib\net40\Selenium.StandardControls.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

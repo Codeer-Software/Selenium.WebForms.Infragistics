@@ -109,7 +109,6 @@ namespace Selenium.WebForms.Infragistics
             while ((bool)Value != check)
             {
                 Show();
-               // var core = (IWebElement)WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + "return activeCell.get_element().children[0];");
                 Element.Focus();
                 Element.SendKeys(Keys.Space);
                 if ((bool)Value == check) break;
