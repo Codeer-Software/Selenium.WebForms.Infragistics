@@ -30,13 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Selenium.StandardControls, Version=0.0.16.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Selenium.StandardControls.0.0.16\lib\net40\Selenium.StandardControls.dll</HintPath>
+    <Reference Include="Selenium.StandardControls, Version=0.0.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Selenium.StandardControls.0.0.20\lib\net40\Selenium.StandardControls.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

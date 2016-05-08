@@ -6,6 +6,7 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
+using OpenQA.Selenium.IE;
 
 namespace Selenium.WebForms.Infragistics
 {
@@ -77,7 +78,17 @@ namespace Selenium.WebForms.Infragistics
                 try
                 {
                     // Combo box corresponding to are calling in a row
-                    new Actions(WebDataGrid.Driver).DoubleClick(Element).Build().Perform();
+                    if (Element.GetWebDriver() is InternetExplorerDriver)
+                    {
+                        //ie's F2 is difference.
+                        System.Windows.Forms.SendKeys.SendWait("{F2}");
+                    }
+                    else
+                    {
+                        Element.SendKeys(Keys.F2);
+                    }
+                    Element.GetJS().ExecuteScript("");//sync.
+                    
                     element = WebDataGrid.Driver.SwitchTo().ActiveElement();
                     if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
                     {
