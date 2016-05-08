@@ -45,7 +45,7 @@ namespace Selenium.WebForms.Infragistics
 
         public void Edit(string text)
         {
-            Edit(text, e=> e.SendKeys(Keys.Enter));
+            Edit(text, e => e.SendKeys(Keys.Enter));
         }
 
         public void Edit(string text, Action<IWebElement> finishEditing)
@@ -62,7 +62,7 @@ namespace Selenium.WebForms.Infragistics
                 {
                     element.Clear();
                 }
-                catch {}
+                catch { }
             }
             element.SendKeys(text);
             finishEditing(element);
@@ -78,6 +78,9 @@ namespace Selenium.WebForms.Infragistics
                 try
                 {
                     // Combo box corresponding to are calling in a row
+                    Show();
+                    Element.Focus();
+
                     if (Element.GetWebDriver() is InternetExplorerDriver)
                     {
                         //ie's F2 is difference.
@@ -88,7 +91,7 @@ namespace Selenium.WebForms.Infragistics
                         Element.SendKeys(Keys.F2);
                     }
                     Element.GetJS().ExecuteScript("");//sync.
-                    
+
                     element = WebDataGrid.Driver.SwitchTo().ActiveElement();
                     if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
                     {
@@ -122,7 +125,7 @@ namespace Selenium.WebForms.Infragistics
             {
                 string script =
                     $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
-                return (IWebElement) WebDataGrid.Js.ExecuteScript(script);
+                return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
             }
         }
 
