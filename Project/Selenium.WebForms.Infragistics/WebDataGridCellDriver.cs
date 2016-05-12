@@ -7,6 +7,7 @@ using OpenQA.Selenium.Remote;
 using Selenium.StandardControls;
 using Selenium.WebForms.Infragistics.Inside;
 using OpenQA.Selenium.IE;
+using Selenium.StandardControls.AdjustBrowser;
 
 namespace Selenium.WebForms.Infragistics
 {
@@ -18,7 +19,13 @@ namespace Selenium.WebForms.Infragistics
         public string Text => (string)WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_text();");
         public object Value => WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_value();");
         public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
-
+        public enum EditStartMode
+        {
+            JavaScript,
+            SingleClick,
+            DoubleClick,
+            F2,
+        }
 
         internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
@@ -43,14 +50,14 @@ namespace Selenium.WebForms.Infragistics
             remote.LocationOnScreenOnceScrolledIntoView.ToString();
         }
 
-        public void Edit(string text)
+        public void Edit(string text, EditStartMode mode = EditStartMode.F2)
         {
-            Edit(text, e => e.SendKeys(Keys.Enter));
+            Edit(text, mode, e => e.SendKeys(Keys.Enter));
         }
 
-        public void Edit(string text, Action<IWebElement> finishEditing)
+        public void Edit(string text, EditStartMode mode, Action<IWebElement> finishEditing)
         {
-            IWebElement element = ToEditingMode();
+            IWebElement element = ToEditingMode(mode);
             try
             {
                 WebDataGrid.Js.ExecuteScript("arguments[0].select();", element);
@@ -68,40 +75,43 @@ namespace Selenium.WebForms.Infragistics
             finishEditing(element);
         }
 
-        public IWebElement ToEditingMode()
+        public IWebElement ToEditingMode(EditStartMode mode = EditStartMode.F2)
         {
-            Show();
-            Activate();
-            IWebElement element;
-            while (true)
+            switch (mode)
             {
-                try
-                {
-                    // Combo box corresponding to are calling in a row
-                    Show();
-                    Element.Focus();
-
-                    if (Element.GetWebDriver() is InternetExplorerDriver)
+                case EditStartMode.JavaScript:
+                    return ToEditingMode(() =>
                     {
-                        //ie's F2 is difference.
-                        System.Windows.Forms.SendKeys.SendWait("{F2}");
-                    }
-                    else
+                        var js = new WebDataGridJSutility(WebDataGrid);
+                        WebDataGrid.Js.ExecuteScript(js.GetGridScript + js.GetActiveCellScript + js.EnterEditModeScript);
+                    });
+                case EditStartMode.DoubleClick:
+                    return ToEditingMode(() =>
                     {
-                        Element.SendKeys(Keys.F2);
-                    }
-                    Element.GetJS().ExecuteScript("");//sync.
-
-                    element = WebDataGrid.Driver.SwitchTo().ActiveElement();
-                    if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
+                        new Actions(WebDataGrid.Driver).DoubleClick(Element).Build().Perform();
+                    });
+                case EditStartMode.SingleClick:
+                    return ToEditingMode(() =>
                     {
-                        break;
-                    }
-                }
-                catch { }
-                Thread.Sleep(10);
+                        Element.ClickEx();
+                    });
+                case EditStartMode.F2:
+                    return ToEditingMode(() =>
+                    {
+                        if (Element.GetWebDriver() is InternetExplorerDriver)
+                        {
+                            //ie's F2 is difference.
+                            System.Windows.Forms.SendKeys.SendWait("{F2}");
+                        }
+                        else
+                        {
+                            Element.SendKeys(Keys.F2);
+                        }
+                    });
+                default:
+                    throw new NotFoundException();
             }
-            return element;
+
         }
 
         public void Edit(bool check)
@@ -128,6 +138,33 @@ namespace Selenium.WebForms.Infragistics
                 return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
             }
         }
+
+        private IWebElement ToEditingMode(Action action)
+        {
+            Show();
+            Activate();
+            IWebElement element;
+            while (true)
+            {
+                try
+                {
+                    // Combo box corresponding to are calling in a row
+                    Show();
+                    Element.Focus();
+                    action();
+                    Element.GetJS().ExecuteScript("");//sync.
+                    element = WebDataGrid.Driver.SwitchTo().ActiveElement();
+                    if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
+                    {
+                        break;
+                    }
+                }
+                catch { }
+                Thread.Sleep(10);
+            }
+            return element;
+        }
+
 
     }
 }

@@ -46,12 +46,12 @@ namespace Test
             Assert.AreEqual("200", childGrid.GetCell(0, 2).Text);
 
             //DateTimeEditorProvider
-            childGrid.GetCell(0, 4).Edit("2018/02/10"); //<- Azure
-            Assert.AreEqual("2018/02/10", childGrid.GetCell(0, 4).Text);
+            childGrid.GetCell(0, 4).Edit("01/01/2020"); //<- Azure
+            Assert.AreEqual("1/1/2020", childGrid.GetCell(0, 4).Text);
 
             //DatePickerProvider
-            childGrid.GetCell(0, 5).Edit("2019/02/10");
-            Assert.AreEqual("2019/02/10", childGrid.GetCell(0, 5).Text);
+            childGrid.GetCell(0, 5).Edit("01/01/2019");
+            Assert.AreEqual("1/1/2019", childGrid.GetCell(0, 5).Text);
 
             //NumericEditorProvider
             childGrid.GetCell(0, 6).Edit("100");
@@ -104,13 +104,13 @@ namespace Test
 
             //DateTimeEditorProvider
 
-            grid.GetCell(0, 5).Edit("2019/02/08");
-            Assert.AreEqual("2019/02/08", grid.GetCell(0, 5).Text);
+            grid.GetCell(0, 5).Edit("01/01/2019");
+            Assert.AreEqual("1/1/2019", grid.GetCell(0, 5).Text);
 
             //DatePickerProvider
 
-            grid.GetCell(0, 6).Edit("2020/02/08");
-            Assert.AreEqual("2020/02/08", grid.GetCell(0, 6).Text);
+            grid.GetCell(0, 6).Edit("01/01/2020");
+            Assert.AreEqual("1/1/2020", grid.GetCell(0, 6).Text);
 
             //NumericEditorProvider
 
