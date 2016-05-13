@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -154,7 +155,9 @@ namespace Selenium.WebForms.Infragistics
                     action();
                     Element.GetJS().ExecuteScript("");//sync.
                     element = WebDataGrid.Driver.SwitchTo().ActiveElement();
-                    if (element.Displayed && element.TagName == "input" || element.TagName == "textarea")
+                    var rect1 = GetRect(Element);
+                    var rect2 = GetRect(element);
+                    if (element.Displayed && (element.TagName == "input" || element.TagName == "textarea") && rect1.IntersectsWith(rect2))
                     {
                         break;
                     }
@@ -165,6 +168,31 @@ namespace Selenium.WebForms.Infragistics
             return element;
         }
 
+        private Rectangle GetRect(IWebElement element)
+        {
+            var rect = (Dictionary<string, object>)WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect();", element);
+            return new Rectangle(ToInt(rect["left"]), ToInt(rect["top"]), ToInt(rect["width"]), ToInt(rect["height"]));
+        }
 
+        private static int ToInt(object value)
+        {
+            if (value is double)
+            {
+                return (int)(double)value;
+            }
+            if (value is float)
+            {
+                return (int)(float)value;
+            }
+            if (value is long)
+            {
+                return (int)(long)value;
+            }
+            if (value is int)
+            {
+                return (int)value;
+            }
+            throw new NotSupportedException();
+        }
     }
 }
