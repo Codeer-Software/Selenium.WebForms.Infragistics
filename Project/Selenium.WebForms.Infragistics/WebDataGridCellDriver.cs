@@ -144,7 +144,7 @@ namespace Selenium.WebForms.Infragistics
         {
             Show();
             Activate();
-            IWebElement element;
+            IWebElement activeElement;
             while (true)
             {
                 try
@@ -154,10 +154,11 @@ namespace Selenium.WebForms.Infragistics
                     Element.Focus();
                     action();
                     Element.GetJS().ExecuteScript("");//sync.
-                    element = WebDataGrid.Driver.SwitchTo().ActiveElement();
-                    var rect1 = GetRect(Element);
-                    var rect2 = GetRect(element);
-                    if (element.Displayed && (element.TagName == "input" || element.TagName == "textarea") && rect1.IntersectsWith(rect2))
+                    activeElement = WebDataGrid.Driver.SwitchTo().ActiveElement();
+                    var cellRect = GetRect(Element);
+                    cellRect.Inflate(4, 4);
+                    var activeRect = GetRect(activeElement);
+                    if (activeElement.Displayed && (activeElement.TagName == "input" || activeElement.TagName == "textarea") && cellRect.Contains(activeRect))
                     {
                         break;
                     }
@@ -165,7 +166,7 @@ namespace Selenium.WebForms.Infragistics
                 catch { }
                 Thread.Sleep(10);
             }
-            return element;
+            return activeElement;
         }
 
         private Rectangle GetRect(IWebElement element)
