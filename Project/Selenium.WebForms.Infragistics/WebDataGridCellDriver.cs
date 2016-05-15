@@ -158,7 +158,8 @@ namespace Selenium.WebForms.Infragistics
                     var cellRect = GetRect(Element);
                     cellRect.Inflate(4, 4);
                     var activeRect = GetRect(activeElement);
-                    if (activeElement.Displayed && (activeElement.TagName == "input" || activeElement.TagName == "textarea") && cellRect.Contains(activeRect))
+                    if (activeElement.Displayed && (activeElement.TagName == "input" || activeElement.TagName == "textarea")
+                        && activeElement.Size.Height != 0 && activeElement.Size.Width != 0 && cellRect.Contains(activeRect))
                     {
                         break;
                     }
