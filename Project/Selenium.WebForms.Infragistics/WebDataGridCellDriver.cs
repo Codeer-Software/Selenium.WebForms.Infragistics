@@ -172,8 +172,11 @@ namespace Selenium.WebForms.Infragistics
 
         private Rectangle GetRect(IWebElement element)
         {
-            var rect = (Dictionary<string, object>)WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect();", element);
-            return new Rectangle(ToInt(rect["left"]), ToInt(rect["top"]), ToInt(rect["width"]), ToInt(rect["height"]));
+            var left = WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect().left;", element);
+            var top = WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect().top;", element);
+            var width = WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect().width;", element);
+            var height = WebDataGrid.Js.ExecuteScript("return arguments[0].getBoundingClientRect().height;", element);
+            return new Rectangle(ToInt(left), ToInt(top), ToInt(width), ToInt(height));
         }
 
         private static int ToInt(object value)
