@@ -156,10 +156,14 @@ namespace Selenium.WebForms.Infragistics
                     Element.GetJS().ExecuteScript("");//sync.
                     activeElement = WebDataGrid.Driver.SwitchTo().ActiveElement();
                     var cellRect = GetRect(Element);
-                    cellRect.Inflate(4, 4);
                     var activeRect = GetRect(activeElement);
+                    var intersect = activeRect;
+                    intersect.Intersect(cellRect);
+
+                    //Certified and editing elements if the cross more than half of the activeElement area
+                    var certifyTargetRect = ((activeRect.Width* activeRect.Height) / 2) < (intersect.Width* intersect.Height);
                     if (activeElement.Displayed && (activeElement.TagName == "input" || activeElement.TagName == "textarea")
-                        && activeElement.Size.Height != 0 && activeElement.Size.Width != 0 && cellRect.Contains(activeRect))
+                        && activeElement.Size.Height != 0 && activeElement.Size.Width != 0 && certifyTargetRect)
                     {
                         break;
                     }
