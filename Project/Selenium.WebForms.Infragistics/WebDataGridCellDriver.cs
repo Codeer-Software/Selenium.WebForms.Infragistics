@@ -51,6 +51,11 @@ namespace Selenium.WebForms.Infragistics
             remote.LocationOnScreenOnceScrolledIntoView.ToString();
         }
 
+        public void ScrollIntoView(bool alignToTop)
+        {
+            WebDataGrid.Js.ExecuteScript($"arguments[0].scrollIntoView({alignToTop.ToString().ToLower()});", Element);
+        }
+
         public void Edit(string text, EditStartMode mode = EditStartMode.F2)
         {
             Edit(text, mode, e => e.SendKeys(Keys.Enter));
