@@ -47,7 +47,8 @@ namespace Selenium.WebForms.Infragistics
 
         public void Show()
         {
-            WebDataGrid.Js.ExecuteScript("arguments[0].scrollIntoView(true);", Element);
+            var remote = Element as RemoteWebElement;
+            remote.LocationOnScreenOnceScrolledIntoView.ToString();
         }
 
         public void Edit(string text, EditStartMode mode = EditStartMode.F2)
