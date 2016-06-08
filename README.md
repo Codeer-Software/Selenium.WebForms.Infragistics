@@ -47,7 +47,7 @@ Corresponding control
 - WebDataGrid
 - WebHierarchicalDataGrid
 
-WebDataGrid cell editing
+WebDataGrid cell
 ---
 Specify the columns and rows , without being aware of the differences between the DataField and EditorProvider, it can be edited and acquisition
 - BoundDataField
@@ -90,14 +90,19 @@ grid.GetCell(0, 6).Text.Is("TextBox");
 grid.GetCell(0, 7).Edit("TextEditor");
 grid.GetCell(0, 7).Text.Is("TextEditor");
 ```
+- Edit start specified in the enum
+```cs 
+public enum EditStartMode
+{
+    JavaScript,     //To edit in the JavaScript of EnterEditMode
+    SingleClick,    //To edit in SingleClick
+    DoubleClick,    //To edit in DoubleClick
+    F2,             //To edit in F2 Key
+}
+```
 
-Edit start specified in the enum
- - JavaScript - To edit in the JavaScript of EnterEditMode
- - SingleClick - To edit in SingleClick
- - DoubleClick - To edit in DoubleClick
- - F2 - To edit in F2 Key
-
-
+WebDataGrid cell finishEditing
+---
 Use in does not work normally the case and not the standby after the editing of each cell . Since the part that depends on the screen , there is no single answer , such as may be wait unconditionally 5 seconds . Where it has been making that can last in the Action to set the cell editing.
 
 Example: Send the Enter key until no exception
@@ -144,4 +149,30 @@ grid.GetCell(0, 1).Text.Is("Matsui");
 ```cs 
 _webDataGrid.GetColumn(2).SetFixed(true);
 _webDataGrid.GetColumn(2).SetFixed(false);
+```
+
+
+
+WebHierarchicalDataGrid
+---
+Handled in the same way as basic WebDataGrid. It can be acquired for the up in the hierarchy of the opening and closing and child hierarchy
+- Basic
+```cs 
+var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
+grid.GetCell(0, 0).Edit("100");
+grid.GetCell(0, 0).Text.Is("100");
+```
+- Hierarchy
+```cs 
+var childGrid = grid.GetRowIslands(0, 0, 0);
+childGrid.SetExpanded(true);    //Can not edit not open
+childGrid.GetCell.GetCell(0, 0).Edit("100");
+childGrid.GetCell(0, 0).Text.Is("100");
+```
+
+Wait for Ajax indicator
+---
+If you have a heavy processing to WebDataGrid, indicator of Infragistics is displayed . If you wait until this disappears call the following methods . (SetExpanded are calling internally) .
+```cs 
+IgAjax.WaitForAjaxIndicator(Driver);
 ```
