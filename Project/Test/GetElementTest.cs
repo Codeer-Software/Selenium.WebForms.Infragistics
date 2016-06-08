@@ -13,7 +13,8 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-            _driver = BrowserUtil.GetDriver();
+
+            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Chrome);
             _driver.Url = TestCommon.TargetUrl;
         }
 

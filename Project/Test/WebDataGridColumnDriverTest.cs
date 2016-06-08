@@ -17,7 +17,7 @@ namespace Test
         [TestInitialize]
         public void TestInitialize()
         {
-            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Firefox);
+            _driver = BrowserUtil.GetDriver(BrowserUtil.Browser.Chrome);
             _driver.Url = TestCommon.TargetUrl;
             _webDataGrid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
         }

@@ -12,22 +12,39 @@ using Selenium.StandardControls.AdjustBrowser;
 
 namespace Selenium.WebForms.Infragistics
 {
+    /// <summary>
+    /// WebDataGridCell Driver
+    /// </summary>
     public class WebDataGridCellDriver
     {
-        public WebDataGridDriver WebDataGrid { get; }
-        public int RowIndex { get; }
-        public int ColIndex { get; }
-        public string Text => (string)WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_text();");
-        public object Value => WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_value();");
-        public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
+        /// <summary>
+        /// Edit How to Start
+        /// </summary>
         public enum EditStartMode
         {
+            /// <summary>
+            /// To edit in the JavaScript of EnterEditMode
+            /// </summary>
             JavaScript,
+            /// <summary>
+            /// To edit in SingleClick
+            /// </summary>
             SingleClick,
+            /// <summary>
+            /// To edit in DoubleClick
+            /// </summary>
             DoubleClick,
+            /// <summary>
+            /// To edit in F2 Key
+            /// </summary>
             F2,
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webDataGrid">Instance of WebDataGridDriver</param>
+        /// <param name="rowIndex">The index of the row</param>
+        /// <param name="colIndex">The index of the column</param>
         internal WebDataGridCellDriver(WebDataGridDriver webDataGrid, int rowIndex, int colIndex)
         {
             WebDataGrid = webDataGrid;
@@ -35,6 +52,50 @@ namespace Selenium.WebForms.Infragistics
             ColIndex = colIndex;
         }
 
+        /// <summary>
+        /// Simple to WebDriver accessor
+        /// </summary>
+        public WebDataGridDriver WebDataGrid { get; }
+        /// <summary>
+        /// The index of the row
+        /// </summary>
+        public int RowIndex { get; }
+        /// <summary>
+        /// The index of the column
+        /// </summary>
+        public int ColIndex { get; }
+        /// <summary>
+        /// Get the text of cell
+        /// </summary>
+        public string Text => (string)WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_text();");
+        /// <summary>
+        /// Get the value of cell
+        /// </summary>
+        public object Value => WebDataGrid.Js.ExecuteScript(new WebDataGridJSutility(WebDataGrid).GetGridScript + "return " + CellScript + ".get_value();");
+        /// <summary>
+        /// Script to get the cell
+        /// </summary>
+        public string CellScript => $"{WebDataGrid.GridScript}.get_rows().get_row({RowIndex}).get_cell({ColIndex})";
+        /// <summary>
+        /// Element of cell
+        /// </summary>
+        public IWebElement Element
+        {
+            get
+            {
+                string script =
+                    $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
+                return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
+            }
+        }
+        /// <summary>
+        /// Element Infomation of cell
+        /// </summary>
+        public ElementInfo Info => new ElementInfo(Element);
+
+        /// <summary>
+        /// The cell to activate
+        /// </summary>
         public void Activate()
         {
             var js = new WebDataGridJSutility(WebDataGrid);
@@ -45,22 +106,40 @@ namespace Selenium.WebForms.Infragistics
             WebDataGrid.Js.ExecuteScript(setActiveCell);
         }
 
+        /// <summary>
+        /// To display the cell within the screen
+        /// </summary>
         public void Show()
         {
             var remote = Element as RemoteWebElement;
             remote.LocationOnScreenOnceScrolledIntoView.ToString();
         }
 
+        /// <summary>
+        /// scrolls the current element into the visible area of the browser window.
+        /// </summary>
+        /// <param name="alignToTop">If true, the top of the element will be aligned to the top of the visible area of the scrollable ancestor.If false, the bottom of the element will be aligned to the bottom of the visible area of the scrollable ancestor.</param>
         public void ScrollIntoView(bool alignToTop)
         {
             WebDataGrid.Js.ExecuteScript($"arguments[0].scrollIntoView({alignToTop.ToString().ToLower()});", Element);
         }
 
+        /// <summary>
+        /// To edit a cell
+        /// </summary>
+        /// <param name="text">You want to edit text</param>
+        /// <param name="mode">Edit How to Start</param>
         public void Edit(string text, EditStartMode mode = EditStartMode.F2)
         {
             Edit(text, mode, e => e.SendKeys(Keys.Enter));
         }
 
+        /// <summary>
+        /// To edit a cell
+        /// </summary>
+        /// <param name="text">You want to edit text</param>
+        /// <param name="mode">Edit How to Start</param>
+        /// <param name="finishEditing">Edit How to Finish</param>
         public void Edit(string text, EditStartMode mode, Action<IWebElement> finishEditing)
         {
             IWebElement element = ToEditingMode(mode);
@@ -81,6 +160,29 @@ namespace Selenium.WebForms.Infragistics
             finishEditing(element);
         }
 
+        /// <summary>
+        /// To edit a cell(CheckBox only)
+        /// </summary>
+        /// <param name="check">true: check　false: Do not check</param>
+        public void Edit(bool check)
+        {
+            Show();
+            Activate();
+            while ((bool)Value != check)
+            {
+                Show();
+                Element.Focus();
+                Element.SendKeys(Keys.Space);
+                if ((bool)Value == check) break;
+                Thread.Sleep(10);
+            }
+        }
+
+        /// <summary>
+        /// Start editing by mode
+        /// </summary>
+        /// <param name="mode">Edit How to Start</param>
+        /// <returns>Cell element that you want to edit</returns>
         public IWebElement ToEditingMode(EditStartMode mode = EditStartMode.F2)
         {
             switch (mode)
@@ -119,32 +221,6 @@ namespace Selenium.WebForms.Infragistics
             }
 
         }
-
-        public void Edit(bool check)
-        {
-            Show();
-            Activate();
-            var js = new WebDataGridJSutility(WebDataGrid);
-            while ((bool)Value != check)
-            {
-                Show();
-                Element.Focus();
-                Element.SendKeys(Keys.Space);
-                if ((bool)Value == check) break;
-                Thread.Sleep(10);
-            }
-        }
-        public ElementInfo Info => new ElementInfo(Element);
-        public IWebElement Element
-        {
-            get
-            {
-                string script =
-                    $"{new WebDataGridJSutility(WebDataGrid).GetGridScript}return {CellScript}.get_element();";
-                return (IWebElement)WebDataGrid.Js.ExecuteScript(script);
-            }
-        }
-
         private IWebElement ToEditingMode(Action action)
         {
             Show();

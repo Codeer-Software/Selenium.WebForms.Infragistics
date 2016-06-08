@@ -1,4 +1,4 @@
-﻿namespace Selenium.WebForms.Infragistics
+﻿namespace Test
 {
     public static class TestCommon
     {

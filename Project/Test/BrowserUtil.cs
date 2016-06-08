@@ -50,8 +50,7 @@ namespace Test
                     driver = new InternetExplorerDriver(caps);
                     break;
                 case Browser.Firefox:
-                    var binary = new FirefoxBinary(@"C:\Program Files (x86)\Mozilla Firefox\firefox.exe");
-                    driver = new FirefoxDriver(binary, new FirefoxProfile());
+                    driver = new FirefoxDriver();
                     break;
                 case Browser.Edge:
                     var programFiles = (Environment.Is64BitOperatingSystem) ? "%ProgramFiles(x86)%" : "%ProgramFiles%";

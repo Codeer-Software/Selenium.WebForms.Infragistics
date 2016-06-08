@@ -73,6 +73,7 @@
     <Compile Include="BrowserUtil.cs" />
     <Compile Include="ChainingAssertion.MSTest.cs" />
     <Compile Include="GetElementTest.cs" />
+    <Compile Include="TestCommon.cs" />
     <Compile Include="WebDataGridColumnDriverTest.cs" />
     <Compile Include="WebDataGridEditorProviderDriverTest.cs" />
     <Compile Include="WebHierarchicalDataGridDriverTest.cs" />
