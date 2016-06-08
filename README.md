@@ -151,7 +151,20 @@ _webDataGrid.GetColumn(2).SetFixed(true);
 _webDataGrid.GetColumn(2).SetFixed(false);
 ```
 
+Element & ElementInfo
+---
+Cell and columns have the IWebElement and ElementInfo to each. Please operate using the IWebElement directly depending on the situation. Also ElementInfo to get the information of the attributes is useful([Detail](https://github.com/Codeer-Software/Selenium.StandardControls/blob/master/README.md#about-element--elementinfo)).
 
+```cs 
+grid.GetCell(0, 0).Element.Click();
+grid.GetColumn(1).Element.SendKeys(Keys.Enter);
+grid.GetActiveCellElement().Text.Is("AA");
+
+grid.GetCell(0, 0).Info.InnerHtml.Is("1");
+grid.GetCell(0, 0).Info.FontBold.IsFalse();
+grid.GetCell(0, 0).Info.BackGroundColor.Is("rgba(219, 112, 147, 1)");
+grid.GetCell(0, 0).Info.TextAlign.Is("left");
+```
 
 WebHierarchicalDataGrid
 ---
