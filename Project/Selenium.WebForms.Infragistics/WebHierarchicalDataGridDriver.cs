@@ -20,11 +20,11 @@ namespace Selenium.WebForms.Infragistics
         }
         private Indexs Index { get; set; }
         private int Islands { get; set; }
-        private string GridExpandedScript => GetGridName(true);
+        private string GridExpandedName => GetGridName(true);
         /// <summary>
         /// Grid name of WebHierarchicalDataGridDriver
         /// </summary>
-        public override string GridScript => GetGridName(false);
+        protected internal override string GridName => GetGridName(false);
 
         /// <summary>
         /// Constructor
@@ -67,7 +67,7 @@ namespace Selenium.WebForms.Infragistics
         {
             if (Islands == 0) return;
             var js = new WebDataGridJSutility(this);
-            Js.ExecuteScript($"{js.GetGridScript}{GridExpandedScript}.get_rows().get_row({Index.RowIndex}).set_expanded({isExpanded.ToString().ToLower()});");
+            Js.ExecuteScript($"{js.GetGridScript}{GridExpandedName}.get_rows().get_row({Index.RowIndex}).set_expanded({isExpanded.ToString().ToLower()});");
             IgAjax.WaitForAjaxIndicator(Driver);
         }
 

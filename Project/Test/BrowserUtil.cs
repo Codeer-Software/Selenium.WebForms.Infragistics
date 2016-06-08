@@ -23,7 +23,7 @@ namespace Test
 
         public static Func<IWebDriver, bool> IsTitle(string title)
         {
-            return (driver) =>
+            return driver =>
             {
                 try
                 {

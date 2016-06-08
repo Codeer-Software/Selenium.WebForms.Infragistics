@@ -10,25 +10,6 @@ namespace Selenium.WebForms.Infragistics
     public class WebDataGridDriver
     {
         /// <summary>
-        /// Sort Type
-        /// </summary>
-        public enum SortType
-        {
-            /// <summary>
-            /// Do not sort
-            /// </summary>
-            None,
-            /// <summary>
-            /// Sort in ascending order
-            /// </summary>
-            Ascending,
-            /// <summary>
-            /// Sort in descending order
-            /// </summary>
-            Descending,
-        }
-
-        /// <summary>
         /// Simple to WebDriver accessor
         /// </summary>
         public IWebDriver Driver { get; }
@@ -43,7 +24,7 @@ namespace Selenium.WebForms.Infragistics
         /// <summary>
         /// Grid name of WebDataGrid
         /// </summary>
-        public virtual string GridScript => WebDataGridJSutility.WebDataGridGridName;
+        protected internal virtual string GridName => WebDataGridJSutility.WebDataGridGridName;
 
         /// <summary>
         /// Constructor
@@ -81,7 +62,7 @@ namespace Selenium.WebForms.Infragistics
         /// <returns>WebDataGridCellDriver Collection</returns>
         public IEnumerable<WebDataGridCellDriver> GetCells(int rowIndex)
         {
-            var script = new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_rows().get_row({rowIndex}).get_cellCount();";
+            var script = new WebDataGridJSutility(this).GetGridScript + $"return {GridName}.get_rows().get_row({rowIndex}).get_cellCount();";
             var count = (long)Js.ExecuteScript(script);
             for (var i = 0; i < count; i++)
             {
@@ -92,12 +73,12 @@ namespace Selenium.WebForms.Infragistics
         /// <summary>
         /// Number of rows
         /// </summary>
-        public long RowCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_rows().get_length();");
+        public long RowCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridName}.get_rows().get_length();");
 
         /// <summary>
         /// Number of columns
         /// </summary>
-        public long ColumnCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridScript}.get_columns().get_length();");
+        public long ColumnCount => (long)Js.ExecuteScript(new WebDataGridJSutility(this).GetGridScript + $"return {GridName}.get_columns().get_length();");
 
         /// <summary>
         /// Get WebDataGridColumnDriver
@@ -110,7 +91,7 @@ namespace Selenium.WebForms.Infragistics
         /// Get page index
         /// </summary>
         /// <returns></returns>
-        public long GetPageIndex() => (long)Js.ExecuteScript($"{new WebDataGridJSutility(this).GetGridScript} return {GridScript}.get_behaviors().get_paging().get_pageIndex();") + 1;
+        public long GetPageIndex() => (long)Js.ExecuteScript($"{new WebDataGridJSutility(this).GetGridScript} return {GridName}.get_behaviors().get_paging().get_pageIndex();") + 1;
 
         /// <summary>
         /// Set page index
@@ -118,7 +99,7 @@ namespace Selenium.WebForms.Infragistics
         /// <param name="page"></param>
         public void SetPageIndex(int page)
         {
-            Js.ExecuteScript($"{new WebDataGridJSutility(this).GetGridScript}{GridScript}.get_behaviors().get_paging().set_pageIndex({page - 1});");
+            Js.ExecuteScript($"{new WebDataGridJSutility(this).GetGridScript}{GridName}.get_behaviors().get_paging().set_pageIndex({page - 1});");
         }
     }
 }

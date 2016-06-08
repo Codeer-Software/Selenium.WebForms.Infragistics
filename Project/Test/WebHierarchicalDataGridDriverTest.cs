@@ -45,8 +45,6 @@ namespace Test
             var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
 
             var childGrid = grid.GetRowIslands(0, 0, 0);
-            var childGrid1 = childGrid.GetRowIslands(0, 0, 0);
-
             childGrid.SetExpanded(true);
 
             var childcell07 = childGrid.GetCell(0, 7);

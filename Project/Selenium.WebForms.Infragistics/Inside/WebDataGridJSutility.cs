@@ -8,7 +8,7 @@
         internal WebDataGridJSutility(WebDataGridDriver driver)
         {
             _id = driver?.Id;
-            _grid = driver?.GridScript;
+            _grid = driver?.GridName;
         }
 
         public static string WebDataGridGridName => "grid";

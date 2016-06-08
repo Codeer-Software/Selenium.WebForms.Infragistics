@@ -14,7 +14,27 @@ namespace Selenium.WebForms.Infragistics
         private WebDataGridDriver WebDataGrid { get; }
         private int ColumnIndex { get; }
         private string ColumnKey { get; }
-        private string ColumnScript =>  $"{new WebDataGridJSutility(WebDataGrid).GetGridScript} return {WebDataGrid.GridScript}.get_columns().get_column({ColumnIndex})";
+        private string ColumnScript =>  $"{new WebDataGridJSutility(WebDataGrid).GetGridScript} return {WebDataGrid.GridName}.get_columns().get_column({ColumnIndex})";
+
+        /// <summary>
+        /// Sort Type
+        /// </summary>
+        public enum SortType
+        {
+            /// <summary>
+            /// Do not sort
+            /// </summary>
+            None,
+            /// <summary>
+            /// Sort in ascending order
+            /// </summary>
+            Ascending,
+            /// <summary>
+            /// Sort in descending order
+            /// </summary>
+            Descending,
+        }
+
         /// <summary>
         /// Column header name
         /// </summary>
@@ -44,13 +64,13 @@ namespace Selenium.WebForms.Infragistics
         /// Read-only state
         /// </summary>
         /// <returns>true:read-only false:not a read-only</returns>
-        public bool IsReadOnly() => (bool)ExecuteScript($"return {WebDataGrid.GridScript}.get_behaviors().get_editingCore().get_behaviors().get_cellEditing().get_columnSettings()._items[{ColumnIndex}]._readOnly;");
+        public bool IsReadOnly() => (bool)ExecuteScript($"return {WebDataGrid.GridName}.get_behaviors().get_editingCore().get_behaviors().get_cellEditing().get_columnSettings()._items[{ColumnIndex}]._readOnly;");
 
         /// <summary>
         /// Hidden state
         /// </summary>
         /// <returns>true:hidden false:not a hidden</returns>
-        public bool IsHidden() => (bool)ExecuteScript($"return {WebDataGrid.GridScript}.get_columns().get_columnFromKey('{ColumnKey}').get_hidden();");
+        public bool IsHidden() => (bool)ExecuteScript($"return {WebDataGrid.GridName}.get_columns().get_columnFromKey('{ColumnKey}').get_hidden();");
 
         /// <summary>
         /// Hides
@@ -58,25 +78,25 @@ namespace Selenium.WebForms.Infragistics
         /// <param name="hidden">true:hidden false:not a hidden</param>
         public void SetHidden(bool hidden)
         {
-            ExecuteScript($"{WebDataGrid.GridScript}.get_columns().get_columnFromKey('{ColumnKey}').set_hidden({hidden.ToString().ToLower()});");
+            ExecuteScript($"{WebDataGrid.GridName}.get_columns().get_columnFromKey('{ColumnKey}').set_hidden({hidden.ToString().ToLower()});");
         }
 
         /// <summary>
         /// Sort
         /// </summary>
         /// <param name="sort">Sort type</param>
-        public void SetSort(WebDataGridDriver.SortType sort = WebDataGridDriver.SortType.Ascending)
+        public void SetSort(SortType sort = SortType.Ascending)
         {
             int type;
             switch (sort)
             {
-                case WebDataGridDriver.SortType.None: type = 0; break;
-                case WebDataGridDriver.SortType.Ascending: type = 1; break;
-                case WebDataGridDriver.SortType.Descending: type = 2; break;
+                case SortType.None: type = 0; break;
+                case SortType.Ascending: type = 1; break;
+                case SortType.Descending: type = 2; break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sort), sort, null);
             }
-            var grid = WebDataGrid.GridScript;
+            var grid = WebDataGrid.GridName;
             ExecuteScript($"{grid}.get_behaviors().get_sorting().sortColumn({grid}.get_columns().get_columnFromKey('{ColumnKey}'), {type}, false)");
         }
 
@@ -87,7 +107,7 @@ namespace Selenium.WebForms.Infragistics
         /// <param name="value">Filter values</param>
         public void SetFilter(int filterIndex, string value)
         {
-            var grid = WebDataGrid.GridScript;
+            var grid = WebDataGrid.GridName;
             //http://help.jp.infragistics.com/Help/doc/ASPNET/2014.2/CLR4.0/html/WebDataGrid_Filtering.html
             var script = new StringBuilder();
             script.AppendLine($"var columnFilter = {grid}.get_behaviors().get_filtering().create_columnFilter('{ColumnKey}');");
@@ -107,10 +127,10 @@ namespace Selenium.WebForms.Infragistics
         public void SetFixed(bool fix = true)
         {
             var columnByKey = fix ? "fixColumnByKey" : "unfixColumnByKey";
-            ExecuteScript($"{WebDataGrid.GridScript}.get_behaviors().get_columnFixing().{columnByKey}('{ColumnKey}', $IG.FixLocation.Left)");
+            ExecuteScript($"{WebDataGrid.GridName}.get_behaviors().get_columnFixing().{columnByKey}('{ColumnKey}', $IG.FixLocation.Left)");
         }
 
-        private string GetColumnKey(int colIndex) => (string)ExecuteScript($"return {WebDataGrid.GridScript}.get_columns().get_column({colIndex}).get_key()");
+        private string GetColumnKey(int colIndex) => (string)ExecuteScript($"return {WebDataGrid.GridName}.get_columns().get_column({colIndex}).get_key()");
 
         private object ExecuteScript(string script)
         {
