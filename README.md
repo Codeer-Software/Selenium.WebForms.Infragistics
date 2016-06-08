@@ -2,6 +2,7 @@
 
 Created by Ishikawa-Tatsuya Matsui-Bin  
 [![NuGet Version and Downloads count](https://buildstats.info/nuget/Selenium.WebForms.Infragistics)](https://www.nuget.org/packages/Selenium.WebForms.Infragistics/)
+ [![Build status](https://ci.appveyor.com/api/projects/status/kjp5m07it442ltyc?svg=true)](https://ci.appveyor.com/project/binnmti/selenium-webforms-infragistics)
 
 What is Selenium.WebForms.Infragistics?
 ---
