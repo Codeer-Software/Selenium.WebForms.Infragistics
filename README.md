@@ -190,3 +190,11 @@ If you have a heavy processing to WebDataGrid, indicator of Infragistics is disp
 ```cs 
 IgAjax.WaitForAjaxIndicator(Driver);
 ```
+Author Info
+---
+Ishikawa-Tatsuya & Matsui-Bin is a software developer in Japan at Codeer, Inc.  
+Ishikawa-Tatsuya & Matsui-Bin is awarding Microsoft MVP.
+
+License
+---
+This library is under the Apache License.
