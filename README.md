@@ -49,11 +49,13 @@ namespace Test
 Corresponding control
 ---
 - WebDataGrid
-- WebHierarchicalDataGrid
+![WebDataGrid](http://www.infragistics.com/media/41596/webdatagrid-multi-footer.png)
 
-WebDataGrid cell
+- WebHierarchicalDataGrid
+![WebHierarchicalDataGrid](http://www.infragistics.com/media/41600/whdg-multi-footer.png)
+
+Cell
 ---
-Specify the columns and rows , without being aware of the differences between the DataField and EditorProvider, it can be edited and acquisition
 - BoundDataField
 ```cs 
 grid.GetCell(0, 0).Edit("1");
@@ -64,6 +66,8 @@ grid.GetCell(0, 0).Text.Is("1");
 grid.GetCell(0, 1).Edit(true);
 grid.GetCell(0, 1).Value.IsTrue();
 ```
+EditorProvider
+---
 - DropDownProvider
 ```cs 
 grid.GetCell(0, 2).Edit("Tomato");
@@ -94,7 +98,7 @@ grid.GetCell(0, 6).Text.Is("TextBox");
 grid.GetCell(0, 7).Edit("TextEditor");
 grid.GetCell(0, 7).Text.Is("TextEditor");
 ```
-- Edit start specified in the enum
+- Edit start enum
 ```cs 
 public enum EditStartMode
 {
@@ -105,10 +109,8 @@ public enum EditStartMode
 }
 ```
 
-WebDataGrid cell finishEditing
+Cell finishEditing
 ---
-Use in does not work normally the case and not the standby after the editing of each cell . Since the part that depends on the screen , there is no single answer , such as may be wait unconditionally 5 seconds . Where it has been making that can last in the Action to set the cell editing.
-
 Example: Send the Enter key until no exception
 ```cs 
 grid.GetCell(0, 0).Edit("abc", WebDataGridCellDriver.EditStartMode.F2, (e) =>
@@ -128,10 +130,8 @@ grid.GetCell(0, 0).Edit("abc", WebDataGridCellDriver.EditStartMode.F2, (e) =>
 });
 ```
 
-WebDataGrid Column
+Column
 ---
-Operations such as sorting and filtering not only the acquisition of the column name is also possible
-
 - Column Header Name
 ```cs 
 grid.GetColumn(1).Text.Is("Name");
@@ -155,10 +155,8 @@ _webDataGrid.GetColumn(2).SetFixed(true);
 _webDataGrid.GetColumn(2).SetFixed(false);
 ```
 
-Element & ElementInfo
+Element & ElementInfo([Detail](https://github.com/Codeer-Software/Selenium.StandardControls/blob/master/README.md#about-element--elementinfo))
 ---
-Cell and columns have the IWebElement and ElementInfo to each. Please operate using the IWebElement directly depending on the situation. Also ElementInfo to get the information of the attributes is useful([Detail](https://github.com/Codeer-Software/Selenium.StandardControls/blob/master/README.md#about-element--elementinfo)).
-
 ```cs 
 grid.GetCell(0, 0).Element.Click();
 grid.GetColumn(1).Element.SendKeys(Keys.Enter);
@@ -172,7 +170,6 @@ grid.GetCell(0, 0).Info.TextAlign.Is("left");
 
 WebHierarchicalDataGrid
 ---
-Handled in the same way as basic WebDataGrid. It can be acquired for the up in the hierarchy of the opening and closing and child hierarchy
 - Basic
 ```cs 
 var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
@@ -189,7 +186,6 @@ childGrid.GetCell(0, 0).Text.Is("100");
 
 Wait for Ajax indicator
 ---
-If you have a heavy processing to WebDataGrid, indicator of Infragistics is displayed . If you wait until this disappears call the following methods . (SetExpanded are calling internally) .
 ```cs 
 IgAjax.WaitForAjaxIndicator(Driver);
 ```
