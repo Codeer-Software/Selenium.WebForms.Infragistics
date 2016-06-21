@@ -47,20 +47,20 @@ namespace Test
             var childGrid = grid.GetRowIslands(0, 0, 0);
             childGrid.SetExpanded(true);
 
-            var childcell07 = childGrid.GetCell(0, 7);
-            childcell07.Edit("CDE");
-            Assert.AreEqual("CDE", childcell07.Text);
-            childcell07.Edit("X");
-            Assert.AreEqual("X", childcell07.Text);
-            childcell07.Edit("Y");
-            Assert.AreEqual("Y", childcell07.Text);
+            var childcell06 = childGrid.GetCell(0, 6);
+            childcell06.Edit("CDE");
+            Assert.AreEqual("CDE", childcell06.Text);
+            childcell06.Edit("X");
+            Assert.AreEqual("X", childcell06.Text);
+            childcell06.Edit("Y");
+            Assert.AreEqual("Y", childcell06.Text);
 
             //Checkbox
-            var cell03 = childGrid.GetCell(0, 3);
-            cell03.Edit(true);
-            Assert.AreEqual(true, cell03.Value);
-            cell03.Edit(false);
-            Assert.AreEqual(false, cell03.Value);
+            var cell02 = childGrid.GetCell(0, 2);
+            cell02.Edit(true);
+            Assert.AreEqual(true, cell02.Value);
+            cell02.Edit(false);
+            Assert.AreEqual(false, cell02.Value);
 
             //Combobox
             childGrid.GetCell(0, 0).Activate();

@@ -2,6 +2,6 @@
 {
     public static class TestCommon
     {
-        public const string TargetUrl = "http://seleniumwebformsinfragistics.azurewebsites.net/";
+        public const string TargetUrl = "http://localhost:7570/Default/";
     }
 }

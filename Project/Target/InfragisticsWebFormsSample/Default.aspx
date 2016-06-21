@@ -10,10 +10,8 @@
         <ContentTemplate>
             <div class="row">
                 <div class="col-md-6">
-
                     <h2>WebHierarchicalDataGrid</h2>
                     <div style="width: 100%">
-
                         <asp:AccessDataSource ID="acc1" runat="server" DataFile="~/App_Data/NWind.mdb"
                             DeleteCommand="DELETE FROM [Shippers] WHERE [ShipperID] = ?"
                             InsertCommand="INSERT INTO [Shippers] ([ShipperID], [CompanyName], [Phone]) VALUES (?, ?, ?)"
@@ -49,7 +47,7 @@
                                 <asp:Parameter Name="OrderDate" Type="DateTime" />
                                 <asp:Parameter Name="RequiredDate" Type="DateTime" />
                                 <asp:Parameter Name="ShippedDate" Type="DateTime" />
-                                <asp:Parameter Name="ShipVia" Type="Int32" />
+                                <asp:Parameter Name="ShipVia" Type="String" />
                                 <asp:Parameter Name="Freight" Type="Decimal" />
                                 <asp:Parameter Name="ShipName" Type="String" />
                                 <asp:Parameter Name="ShipAddress" Type="String" />
@@ -62,7 +60,7 @@
                                 <asp:Parameter Name="OrderID" Type="Int32" />
                                 <asp:Parameter Name="CustomerID" Type="String" />
                                 <asp:Parameter Name="OrderDate" Type="DateTime" />
-                                <asp:Parameter Name="ShipVia" Type="Int32" />
+                                <asp:Parameter Name="ShipVia" Type="String" />
                                 <asp:Parameter Name="ShipName" Type="String" />
                                 <asp:Parameter Name="Evaluation" Type="Int32" />
                                 <asp:Parameter Name="Color" Type="Boolean" />
@@ -84,80 +82,70 @@
                                         <ig:Band AutoGenerateColumns="False" DataKeyFields="OrderID" DataMember="acc3_DefaultView" Key="acc3_DefaultView">
                                             <Columns>
                                                 <ig:BoundDataField DataFieldName="Evaluation" Key="Evaluation">
-                                                    <Header Text="評価">
+                                                    <Header Text="Evaluation">
                                                     </Header>
                                                 </ig:BoundDataField>
                                                 <ig:BoundDataField DataFieldName="OrderDate" Key="OrderDate">
-                                                    <Header Text="日付">
-                                                    </Header>
-                                                </ig:BoundDataField>
-                                                <ig:BoundDataField DataFieldName="ShipName" Key="ShipName">
-                                                    <Header Text="場所">
+                                                    <Header Text="Order Date">
                                                     </Header>
                                                 </ig:BoundDataField>
                                                 <ig:BoundCheckBoxField DataFieldName="Color" Key="Color">
-                                                    <Header Text="チェック">
+                                                    <Header Text="Color">
                                                     </Header>
                                                 </ig:BoundCheckBoxField>
                                                 <ig:BoundDataField DataFieldName="RequiredDate" Key="RequiredDate">
-                                                    <Header Text="開始日">
+                                                    <Header Text="RequiredDate">
                                                     </Header>
                                                 </ig:BoundDataField>
                                                 <ig:BoundDataField DataFieldName="ShippedDate" Key="ShippedDate">
-                                                    <Header Text="終了日">
+                                                    <Header Text="ShippedDate">
                                                     </Header>
                                                 </ig:BoundDataField>
                                                 <ig:BoundDataField DataFieldName="Freight" Key="Freight">
-                                                    <Header Text="料金">
+                                                    <Header Text="Freight">
                                                     </Header>
                                                 </ig:BoundDataField>
-                                                <ig:BoundDataField DataFieldName="ShipAddress" Key="ShipAddress">
-                                                    <Header Text="住所">
+                                                <ig:BoundDataField DataFieldName="ShipPostalCode" Key="ShipPostalCode">
+                                                    <Header Text="ShipPostalCode">
                                                     </Header>
                                                 </ig:BoundDataField>
                                             </Columns>
                                         </ig:Band>
                                     </Bands>
-                                    <GroupingSettings AscendingImageAltText="昇順画像" DescendingImageAltText="降順画像">
+                                    <GroupingSettings AscendingImageAltText="AscendingImage" DescendingImageAltText="DescendingImage">
                                     </GroupingSettings>
                                     <Columns>
                                         <ig:BoundDataField DataFieldName="Evaluation" Key="Evaluation">
-                                            <Header Text="評価">
+                                            <Header Text="Evaluation">
                                             </Header>
                                         </ig:BoundDataField>
                                         <ig:BoundDataField DataFieldName="OrderDate" Key="OrderDate">
-                                            <Header Text="日付">
-                                            </Header>
-                                        </ig:BoundDataField>
-                                        <ig:BoundDataField DataFieldName="ShipName" Key="ShipName">
-                                            <Header Text="場所">
+                                            <Header Text="Order Date">
                                             </Header>
                                         </ig:BoundDataField>
                                         <ig:BoundCheckBoxField DataFieldName="Color" Key="Color">
-                                            <Header Text="チェック">
+                                            <Header Text="Color">
                                             </Header>
                                         </ig:BoundCheckBoxField>
 
                                         <ig:BoundDataField DataFieldName="RequiredDate" Key="RequiredDate">
-                                            <Header Text="開始日">
+                                            <Header Text="RequiredDate">
                                             </Header>
                                         </ig:BoundDataField>
                                         <ig:BoundDataField DataFieldName="ShippedDate" Key="ShippedDate">
-                                            <Header Text="終了日">
+                                            <Header Text="ShippedDate">
                                             </Header>
                                         </ig:BoundDataField>
 
                                         <ig:BoundDataField DataFieldName="Freight" Key="Freight">
-                                            <Header Text="料金">
+                                            <Header Text="Freight">
                                             </Header>
                                         </ig:BoundDataField>
 
-                                        <ig:BoundDataField DataFieldName="ShipAddress" Key="ShipAddress">
-                                            <Header Text="住所">
+                                        <ig:BoundDataField DataFieldName="ShipPostalCode" Key="ShipPostalCode">
+                                            <Header Text="ShipPostalCode">
                                             </Header>
                                         </ig:BoundDataField>
-
-
                                     </Columns>
                                     <Behaviors>
                                         <ig:EditingCore>
@@ -165,8 +153,7 @@
                                                 <ig:CellEditing>
                                                     <ColumnSettings>
                                                         <ig:EditingColumnSetting ColumnKey="Evaluation" EditorID="_webHierarchicalDataGrid_DropDownProvider" />
-                                                        <ig:EditingColumnSetting ColumnKey="ShipAddress" EditorID="_webHierarchicalDataGridTextBoxProvider" />
-                                                        <ig:EditingColumnSetting ColumnKey="ShipName" EditorID="_webHierarchicalDataGridTextEditorProvider" />
+                                                        <ig:EditingColumnSetting ColumnKey="ShipPostalCode" EditorID="_webHierarchicalDataGridTextBoxProvider" />
                                                         <ig:EditingColumnSetting ColumnKey="Freight" EditorID="_webHierarchicalDataGridNumericEditorProvider" />
                                                         <ig:EditingColumnSetting ColumnKey="RequiredDate" EditorID="_webHierarchicalDataGridDateTimeEditorProvider" />
                                                         <ig:EditingColumnSetting ColumnKey="ShippedDate" EditorID="_webHierarchicalDataGridDatePickerProvider" />
@@ -179,18 +166,18 @@
                                     </Behaviors>
                                 </ig:Band>
                             </Bands>
-                            <GroupingSettings EmptyGroupAreaText="グループ化するには、列をここへドラッグします。" AscendingImageAltText="昇順画像" DescendingImageAltText="降順画像"></GroupingSettings>
+                            <GroupingSettings EmptyGroupAreaText="Drag" AscendingImageAltText="AscendingImage" DescendingImageAltText="DescendingImage"></GroupingSettings>
                             <Columns>
                                 <ig:BoundDataField DataFieldName="Place" Key="Place">
-                                    <Header Text="場所">
+                                    <Header Text="Place">
                                     </Header>
                                 </ig:BoundDataField>
                                 <ig:BoundDataField DataFieldName="CompanyName" Key="CompanyName">
-                                    <Header Text="ペット">
+                                    <Header Text="CompanyName">
                                     </Header>
                                 </ig:BoundDataField>
                                 <ig:BoundDataField DataFieldName="Phone" Key="Phone">
-                                    <Header Text="電話番号">
+                                    <Header Text="Phone">
                                     </Header>
                                 </ig:BoundDataField>
                             </Columns>
@@ -220,7 +207,6 @@
                                 <ig:Activation>
                                     <ActivationClientEvents ActiveCellChanged="_webHierarchicalDataGrid_Activation_ActiveCellChanged" ActiveCellChanging="_webHierarchicalDataGrid_Activation_ActiveCellChanging" />
                                 </ig:Activation>
-
                             </Behaviors>
                             <EditorProviders>
                                 <ig:DropDownProvider ID="_webHierarchicalDataGrid_DropDownProvider">
@@ -259,8 +245,8 @@
                                 </ig:TextBoxProvider>
                             </EditorProviders>
                         </ig:WebHierarchicalDataGrid>
-                        <asp:Button ID="UpdateButton" runat="server" Text="更新" />
-                        <input id="button1" type="button" value="Debug" onclick="AddColmns(new Array('氏名', '出身地', new Date(2015, 11, 30)))" />
+                        <asp:Button ID="UpdateButton" runat="server" Text="update" />
+                        <input id="button1" type="button" value="Debug" onclick="AddColmns(new Array('Name', 'Place', new Date(2015, 11, 30)))" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -268,35 +254,35 @@
                     <ig:WebDataGrid ID="_webDataGrid" runat="server" AutoGenerateColumns="False" Height="350px" Width="100%" DataKeyFields="Id" TabIndex="1">
                         <Columns>
                             <ig:BoundDataField DataFieldName="Id" Key="Id" CssClass="MyCell">
-                                <Header Text="点数" CssClass="MyCell">
+                                <Header Text="MyCell" CssClass="MyCell">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundDataField DataFieldName="LastName" Key="LastName">
-                                <Header Text="苗字">
+                                <Header Text="LastName">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundCheckBoxField DataFieldName="Support" Key="Support">
-                                <Header Text="扶養">
+                                <Header Text="Support">
                                 </Header>
                             </ig:BoundCheckBoxField>
                             <ig:BoundDataField DataFieldName="Tel" Key="Tel">
-                                <Header Text="電話">
+                                <Header Text="Tel">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundDataField DataFieldName="Sex" Key="Sex">
-                                <Header Text="性別">
+                                <Header Text="Sex">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundDataField DataFieldName="LastLoginDate" Key="LastLoginDate">
-                                <Header Text="最終ログイン時間">
+                                <Header Text="LastLoginDate">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundDataField DataFieldName="FirstLoginDate" Key="FirstLoginDate">
-                                <Header Text="初回ログイン時間">
+                                <Header Text="FirstLoginDate">
                                 </Header>
                             </ig:BoundDataField>
                             <ig:BoundDataField DataFieldName="Age" Key="Age">
-                                <Header Text="年齢">
+                                <Header Text="Age">
                                 </Header>
                             </ig:BoundDataField>
                         </Columns>
@@ -356,7 +342,7 @@
                             </ig:EditingCore>
                             <ig:Activation>
                             </ig:Activation>
-                            <ig:Sorting AscendingImageAltText="昇順画像" DescendingImageAltText="降順画像">
+                            <ig:Sorting AscendingImageAltText="AscendingImage" DescendingImageAltText="DescendingImage">
                             </ig:Sorting>
                             <ig:ColumnFixing>
                             </ig:ColumnFixing>
@@ -369,20 +355,16 @@
                         </Behaviors>
                     </ig:WebDataGrid>
                 </div>
-
                 <script type="text/javascript">
-
                     function _webHierarchicalDataGrid_RowEdit_EnteringEditMode(sender, eventArgs) {
                         console.log("RowEdit_EnteringEdit");
                     }
-
                     function _webHierarchicalDataGrid_RowEdit_EnteringEditMode(sender, eventArgs) {
                         console.log("RowEdit_EnteringEdit");
                     }
                     function _webHierarchicalDataGrid_RowEdit_ExitingEditMode(sender, eventArgs) {
                         console.log("RowEdit_ExitingEdit");
                     }
-
                     function _webHierarchicalDataGrid_CellEditing_EnteredEditMode(sender, eventArgs) {
                         console.log("CellEditing_EnteredEditMode");
                     }
@@ -408,44 +390,10 @@
                         console.log("EditingClientEvents_RowUpdating");
                     }
                     function AddColmns(data) {
-
-                        var grid = $find("MainContent__webDataGrid");
-
-
-                        var bg2 = grid.get_rows().get_row(0).get_cell(0).get_element().className;
-
-                        //$(".myClass").css("border", "3px solid red");
-
-
-                        //MyCell ig2b0a1c24 "background-color"
-
-
-                        //var element = $(".MyCell ig2b0a1c24");
-
                         var element = document.getElementsByClassName("MyCell ig2b0a1c24");
-
                         var style = (element[0].currentStyle || document.defaultView.getComputedStyle(element[0], null));
-
-
-                        //var border = $(".MyCell").css("border", "3px solid red");
                         alert("2" + style);
                         alert("2" + style.backgroundColor);
-
-                        //className
-                        // dp.set_value(input.value);
-
-                        //var id1 = document.getElementById('MainContent__webDataGrid__webDataGrid_NumericEditorProvider1').firstElementChild.id;
-                        //alert(id1);
-
-
-                        //focus();
-                        //var grid = $find("MainContent__webDataGrid");
-                        //grid.get_element().focus();
-                        //var activeCell = grid.get_behaviors().get_activation().get_activeCell();
-                        //grid.get_behaviors().get_editingCore().get_behaviors().get_cellEditing().enterEditMode(activeCell);
-
-                        //var grid = $find("MainContent__webHierarchicalDataGrid");
-                        //grid.get_behaviors().get_activation().set_activeCell(grid.get_gridView().get_rows().get_row(2).get_cell(1));
                     }
                 </script>
         </ContentTemplate>

@@ -45,7 +45,7 @@ namespace Test
         public void TestGetCells()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            Assert.AreEqual("松井", grid.GetCells(0).ElementAt(1).Text);
+            Assert.AreEqual("Matsui", grid.GetCells(0).ElementAt(1).Text);
         }
 
 
@@ -53,7 +53,7 @@ namespace Test
         public void TestWebDataGridColmnDriver()
         {
             var grid = new WebDataGridDriver(_driver, "MainContent__webDataGrid");
-            Assert.AreEqual("苗字", grid.GetColumn(1).Text);
+            Assert.AreEqual("LastName", grid.GetColumn(1).Text);
         }
 
         [TestMethod]

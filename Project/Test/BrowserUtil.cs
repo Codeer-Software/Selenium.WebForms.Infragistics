@@ -45,7 +45,6 @@ namespace Test
                     driver = new ChromeDriver();
                     break;
                 case Browser.Ie:
-                    //Surface4などZoomLevel200%が推奨だけど、デフォルトだと100%でないと起動しないので
                     var caps = new InternetExplorerOptions {IgnoreZoomLevel = true};
                     driver = new InternetExplorerDriver(caps);
                     break;
