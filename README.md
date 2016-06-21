@@ -8,6 +8,9 @@ What is Selenium.WebForms.Infragistics?
 ---
 The Selenium.WebForms.Infragistics, wraps the Seleinum in C #, test libraries to handle the control of Infragistics easily.
 
+
+![image](/image.png)
+
 Sample Code
 ---
 ```cs  
