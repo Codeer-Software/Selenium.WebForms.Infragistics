@@ -48,14 +48,15 @@ namespace Test
 ```
 Corresponding control
 ---
-- WebDataGrid
+- WebDataGrid  
 ![WebDataGrid](http://www.infragistics.com/media/41596/webdatagrid-multi-footer.png)
 
-- WebHierarchicalDataGrid
+- WebHierarchicalDataGrid  
 ![WebHierarchicalDataGrid](http://www.infragistics.com/media/41600/whdg-multi-footer.png)
 
 Cell
 ---
+![Cell_Editing](http://help.infragistics.com/Help/Doc/ASPNET/2012.2/CLR4.0/html/images/WebDataGrid_Enabling_Cell_Editing_01.png)
 - BoundDataField
 ```cs 
 grid.GetCell(0, 0).Edit("1");
@@ -66,8 +67,20 @@ grid.GetCell(0, 0).Text.Is("1");
 grid.GetCell(0, 1).Edit(true);
 grid.GetCell(0, 1).Value.IsTrue();
 ```
-EditorProvider
+- Edit start enum
+```cs 
+public enum EditStartMode
+{
+    JavaScript,     //To edit in the JavaScript of EnterEditMode
+    SingleClick,    //To edit in SingleClick
+    DoubleClick,    //To edit in DoubleClick
+    F2,             //To edit in F2 Key
+}
+```
+Editor Providers
 ---
+![Editor Providers](http://www.infragistics.com/help/aspnet/images/webhierarchicaldatagrid_using_editor_providers_01.png
+)
 - DropDownProvider
 ```cs 
 grid.GetCell(0, 2).Edit("Tomato");
@@ -98,17 +111,6 @@ grid.GetCell(0, 6).Text.Is("TextBox");
 grid.GetCell(0, 7).Edit("TextEditor");
 grid.GetCell(0, 7).Text.Is("TextEditor");
 ```
-- Edit start enum
-```cs 
-public enum EditStartMode
-{
-    JavaScript,     //To edit in the JavaScript of EnterEditMode
-    SingleClick,    //To edit in SingleClick
-    DoubleClick,    //To edit in DoubleClick
-    F2,             //To edit in F2 Key
-}
-```
-
 Cell finishEditing
 ---
 Example: Send the Enter key until no exception
@@ -132,6 +134,7 @@ grid.GetCell(0, 0).Edit("abc", WebDataGridCellDriver.EditStartMode.F2, (e) =>
 
 Column
 ---
+![Sort](http://help.infragistics.com/Help/Doc/ASPNET/2012.2/CLR4.0/html/images/WebDataGrid_Sort_Columns_in_Code_01.png)
 - Column Header Name
 ```cs 
 grid.GetColumn(1).Text.Is("Name");
@@ -170,6 +173,7 @@ grid.GetCell(0, 0).Info.TextAlign.Is("left");
 
 WebHierarchicalDataGrid
 ---
+![WebHierarchicalDataGrid](http://www.infragistics.com/media/41600/whdg-multi-footer.png)
 - Basic
 ```cs 
 var grid = new WebHierarchicalDataGridDriver(_driver, "MainContent__webHierarchicalDataGrid");
