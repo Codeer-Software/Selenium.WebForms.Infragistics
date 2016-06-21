@@ -111,7 +111,7 @@ grid.GetCell(0, 6).Text.Is("TextBox");
 grid.GetCell(0, 7).Edit("TextEditor");
 grid.GetCell(0, 7).Text.Is("TextEditor");
 ```
-Cell finishEditing
+Edit waiting
 ---
 Example: Send the Enter key until no exception
 ```cs 
